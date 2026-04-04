@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aditya Enterprise | Loan Recovery Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy:#0a1628; --deep:#0d1f3c; --accent:#c8922a; --gold:#e8b84b;
+      --white:#f7f4ef; --gray:#8a97aa; --light:#e8e4dc; --green:#25d366;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Barlow',sans-serif; background:var(--navy); color:var(--white); overflow-x:hidden; }
+    body::after {
+      content:''; position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:9000;
+    }
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.1rem 5%;
+      background:rgba(9,19,36,0.92); backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(200,146,42,0.12);
+    }
+    .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+    .logo-mark {
+      width:40px; height:40px;
+      background:linear-gradient(140deg,var(--accent),var(--gold));
+      border-radius:8px; display:flex; align-items:center; justify-content:center;
+      font-family:'Playfair Display',serif; font-weight:900; font-size:1.25rem;
+      color:var(--navy); box-shadow:0 2px 18px rgba(200,146,42,0.28);
+    }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; line-height:1.2; color:var(--white); }
+    .logo-sub { font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); }
+    .nav-links { display:flex; gap:1.8rem; list-style:none; }
+    .nav-links a { color:var(--light); text-decoration:none; font-size:0.82rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; transition:color 0.2s; }
+    .nav-links a:hover { color:var(--gold); }
+    .nav-cta { background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy)!important; padding:0.48rem 1.3rem; border-radius:5px; font-weight:700!important; }
+    .nav-cta:hover { opacity:0.88; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--light); border-radius:2px; }
+    .mobile-menu {
+      display:none; position:fixed; top:62px; left:0; right:0; z-index:190;
+      background:rgba(9,19,36,0.97); padding:1.5rem 5%; flex-direction:column; gap:1rem;
+      border-bottom:1px solid rgba(200,146,42,0.15);
+    }
+    .mobile-menu a { color:var(--light); text-decoration:none; font-size:0.95rem; font-weight:500; padding:0.4rem 0; display:block; }
+    .mobile-menu.open { display:flex; }
+    /* HERO */
+    .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:4rem; padding:8rem 5% 5rem; position:relative; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 55% 65% at 82% 50%,rgba(26,58,107,0.5) 0%,transparent 70%),radial-gradient(ellipse 35% 45% at 8% 85%,rgba(200,146,42,0.07) 0%,transparent 55%); }
+    .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(200,146,42,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(200,146,42,0.035) 1px,transparent 1px); background-size:55px 55px; }
+    .hero-content { position:relative; z-index:2; }
+    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.28); padding:0.38rem 1rem; border-radius:20px; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:1.4rem; animation:fadeUp 0.7s ease both; }
+    .badge-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation:blink 2.2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    h1 { font-family:'Playfair Display',serif; font-size:clamp(2.6rem,5vw,4.2rem); font-weight:900; line-height:1.06; margin-bottom:1.4rem; animation:fadeUp 0.7s 0.1s ease both; }
+    .h1-accent { color:var(--gold); display:block; }
+    .hero-desc { font-size:1rem; color:var(--gray); line-height:1.8; max-width:490px; margin-bottom:2.4rem; font-weight:300; animation:fadeUp 0.7s 0.2s ease both; }
+    .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp 0.7s 0.3s ease both; }
+    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy); padding:0.88rem 2.1rem; border-radius:5px; font-weight:700; font-size:0.88rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 4px 18px rgba(200,146,42,0.28); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(200,146,42,0.38); }
+    .btn-outline { border:1.5px solid rgba(200,146,42,0.38); color:var(--gold); padding:0.88rem 2.1rem; border-radius:5px; font-weight:600; font-size:0.88rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; transition:background 0.2s,border-color 0.2s; }
+    .btn-outline:hover { background:rgba(200,146,42,0.07); border-color:var(--gold); }
+    .hero-visual { position:relative; z-index:2; animation:fadeIn 1s 0.4s ease both; }
+    .stats-card { background:rgba(255,255,255,0.035); border:1px solid rgba(200,146,42,0.18); border-radius:18px; padding:2rem 1.8rem; backdrop-filter:blur(18px); position:relative; overflow:hidden; }
+    .stats-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--gold),transparent); }
+    .stats-grid { display:grid; grid-template-columns:1fr 1px 1fr; gap:1.4rem; margin-bottom:1.5rem; align-items:center; }
+    .sdiv { background:rgba(200,146,42,0.12); align-self:stretch; }
+    .stat-item { text-align:center; }
+    .stat-num { font-family:'Playfair Display',serif; font-size:2.3rem; font-weight:900; color:var(--gold); line-height:1; display:block; }
+    .stat-label { font-size:0.72rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.25rem; font-weight:500; }
+    .partner-strip { border-top:1px solid rgba(255,255,255,0.06); padding-top:1.1rem; }
+    .partner-label { font-size:0.62rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.16em; margin-bottom:0.7rem; font-weight:600; }
+    .partner-pills { display:flex; gap:0.6rem; flex-wrap:wrap; }
+    .ppill { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); padding:0.28rem 0.75rem; border-radius:20px; font-size:0.72rem; font-weight:600; color:var(--light); }
+    /* SHARED */
+    section { padding:5.5rem 5%; }
+    .section-label { font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent); margin-bottom:0.6rem; }
+    .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.2vw,2.7rem); font-weight:900; line-height:1.15; margin-bottom:0.9rem; }
+    .section-desc { color:var(--gray); font-size:0.96rem; line-height:1.75; max-width:510px; font-weight:300; }
+    /* PARTNERS */
+    .partners { background:var(--deep); border-top:1px solid rgba(200,146,42,0.1); border-bottom:1px solid rgba(200,146,42,0.1); padding:4rem 5%; }
+    .partners-header { text-align:center; margin-bottom:2.8rem; }
+    .partners-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem; max-width:980px; margin:0 auto; }
+    .partner-card { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.13); border-radius:14px; padding:2.4rem 1.8rem; text-align:center; transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s; position:relative; overflow:hidden; }
+    .partner-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); transform:scaleX(0); transition:transform 0.3s; transform-origin:left; }
+    .partner-card:hover { transform:translateY(-5px); border-color:rgba(200,146,42,0.35); box-shadow:0 18px 44px rgba(0,0,0,0.28); }
+    .partner-card:hover::after { transform:scaleX(1); }
+    .partner-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:900; margin:0 auto 1rem; font-family:'Playfair Display',serif; }
+    .bajaj .partner-icon { background:rgba(0,82,204,0.12); color:#5daaff; border:1px solid rgba(0,82,204,0.25); }
+    .hero-p .partner-icon { background:rgba(0,153,68,0.12); color:#5dcc90; border:1px solid rgba(0,153,68,0.25); }
+    .mahindra .partner-icon { background:rgba(204,0,0,0.12); color:#ff7070; border:1px solid rgba(204,0,0,0.25); }
+    .partner-name { font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:0.3rem; }
+    .partner-type { font-size:0.75rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.12em; font-weight:600; margin-bottom:0.7rem; }
+    .partner-desc { font-size:0.85rem; color:var(--gray); line-height:1.65; }
+    /* SERVICES */
+    .services { background:var(--navy); }
+    .services-layout { display:grid; grid-template-columns:1fr 2fr; gap:4.5rem; align-items:start; }
+    .services-intro { position:sticky; top:8rem; }
+    .services-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.3rem; }
+    .service-card { background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.065); border-radius:12px; padding:1.7rem; transition:border-color 0.3s,background 0.3s; }
+    .service-card:hover { border-color:rgba(200,146,42,0.28); background:rgba(200,146,42,0.035); }
+    .service-icon { font-size:1.9rem; margin-bottom:0.9rem; display:block; }
+    .service-title { font-family:'Barlow Condensed',sans-serif; font-size:1.05rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:0.5rem; color:var(--light); }
+    .service-desc { font-size:0.84rem; color:var(--gray); line-height:1.65; }
+    /* ABOUT */
+    .about { background:var(--deep); border-top:1px solid rgba(200,146,42,0.1); }
+    .about-layout { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .founder-card { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.18); border-radius:20px; padding:2.8rem 2.4rem; position:relative; overflow:hidden; }
+    .founder-card::before { content:'"'; position:absolute; top:-30px; right:14px; font-family:'Playfair Display',serif; font-size:13rem; color:rgba(200,146,42,0.04); line-height:1; pointer-events:none; }
+    .founder-avatar { width:76px; height:76px; background:linear-gradient(140deg,var(--accent),var(--gold)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:1.4rem; box-shadow:0 0 28px rgba(200,146,42,0.28); }
+    .founder-name { font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:700; margin-bottom:0.25rem; }
+    .founder-title { font-size:0.72rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.16em; font-weight:600; margin-bottom:1.1rem; }
+    .founder-quote { font-size:0.93rem; color:var(--gray); line-height:1.78; font-style:italic; border-left:2px solid var(--accent); padding-left:1.1rem; }
+    .about-values { display:flex; flex-direction:column; gap:1.4rem; }
+    .value-item { display:flex; gap:1.1rem; align-items:flex-start; }
+    .value-num { font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:900; color:rgba(200,146,42,0.25); line-height:1; min-width:38px; }
+    .value-title { font-family:'Barlow Condensed',sans-serif; font-size:0.98rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.25rem; color:var(--light); }
+    .value-desc { font-size:0.85rem; color:var(--gray); line-height:1.65; }
+    /* METRICS */
+    .why-us { background:var(--navy); text-align:center; }
+    .why-us .section-title, .why-us .section-desc { margin-left:auto; margin-right:auto; }
+    .metrics-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem; margin-top:3.5rem; padding-top:2.8rem; border-top:1px solid rgba(200,146,42,0.1); }
+    .metric { padding:1.8rem 1rem; border-radius:12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); transition:border-color 0.3s; }
+    .metric:hover { border-color:rgba(200,146,42,0.22); }
+    .metric-num { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--gold); display:block; line-height:1; }
+    .metric-suffix { color:var(--accent); font-size:1.7rem; }
+    .metric-label { font-size:0.77rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.45rem; font-weight:500; }
+    /* CAREERS */
+    .careers { background:var(--deep); border-top:1px solid rgba(200,146,42,0.1); }
+    .careers-intro { display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-bottom:3rem; align-items:end; }
+    .hiring-tag { display:inline-flex; align-items:center; gap:7px; background:rgba(37,211,102,0.1); border:1px solid rgba(37,211,102,0.25); padding:0.32rem 0.85rem; border-radius:20px; font-size:0.68rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#5dcc90; margin-bottom:1rem; }
+    .hiring-dot { width:6px; height:6px; background:#5dcc90; border-radius:50%; animation:blink 1.8s infinite; }
+    .careers-note { font-size:0.9rem; color:var(--gray); line-height:1.7; font-weight:300; }
+    .jobs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+    .job-card { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.14); border-radius:14px; padding:1.8rem; cursor:pointer; transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s; position:relative; overflow:hidden; }
+    .job-card:hover { transform:translateY(-5px); border-color:rgba(200,146,42,0.4); box-shadow:0 16px 40px rgba(0,0,0,0.25); }
+    .job-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+    .job-card:hover::before { transform:scaleX(1); }
+    .job-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+    .job-role { font-family:'Barlow Condensed',sans-serif; font-size:1.15rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--light); margin-bottom:0.4rem; }
+    .job-location { font-size:0.75rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.8rem; }
+    .job-desc { font-size:0.84rem; color:var(--gray); line-height:1.65; margin-bottom:1.2rem; }
+    .job-tags { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+    .job-tag { background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.18); padding:0.2rem 0.65rem; border-radius:12px; font-size:0.7rem; font-weight:600; color:var(--gold); letter-spacing:0.05em; }
+    .apply-btn { display:flex; align-items:center; justify-content:center; gap:7px; background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy); padding:0.62rem 1.3rem; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-size:0.88rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; border:none; cursor:pointer; transition:opacity 0.2s,transform 0.2s; width:100%; }
+    .apply-btn:hover { opacity:0.88; transform:translateY(-1px); }
+    /* MODAL */
+    .modal-overlay { display:none; position:fixed; inset:0; z-index:5000; background:rgba(5,12,25,0.88); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:#0e1e36; border:1px solid rgba(200,146,42,0.22); border-radius:20px; width:100%; max-width:580px; max-height:92vh; overflow-y:auto; position:relative; animation:slideUp 0.35s ease; }
+    @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .modal::-webkit-scrollbar { width:5px; }
+    .modal::-webkit-scrollbar-thumb { background:rgba(200,146,42,0.3); border-radius:10px; }
+    .modal-header { padding:2rem 2rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.06); position:sticky; top:0; background:#0e1e36; z-index:2; }
+    .modal-close { position:absolute; top:1.2rem; right:1.4rem; background:rgba(255,255,255,0.06); border:none; color:var(--gray); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s; }
+    .modal-close:hover { background:rgba(200,146,42,0.15); color:var(--gold); }
+    .modal-role-badge { display:inline-flex; align-items:center; gap:7px; background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.22); padding:0.28rem 0.8rem; border-radius:16px; font-size:0.68rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem; }
+    .modal-title { font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:700; line-height:1.2; }
+    .modal-subtitle { font-size:0.83rem; color:var(--gray); margin-top:0.3rem; }
+    .modal-body { padding:1.6rem 2rem 2rem; }
+    .mform-group { margin-bottom:1.1rem; }
+    .mform-group label { display:block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--gray); margin-bottom:0.45rem; }
+    .mform-group input, .mform-group select, .mform-group textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:0.75rem 1rem; color:var(--white); font-family:'Barlow',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
+    .mform-group input:focus, .mform-group select:focus, .mform-group textarea:focus { border-color:rgba(200,146,42,0.45); }
+    .mform-group input::placeholder, .mform-group textarea::placeholder { color:rgba(138,151,170,0.5); }
+    .mform-group select option { background:#0e1e36; }
+    .mform-group textarea { resize:vertical; min-height:88px; }
+    .mform-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .wa-submit { width:100%; margin-top:0.5rem; background:var(--green); color:#fff; border:none; padding:0.95rem 1.5rem; border-radius:8px; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:opacity 0.2s,transform 0.2s; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .wa-submit:hover { opacity:0.9; transform:translateY(-1px); }
+    .wa-icon { font-size:1.15rem; }
+    .modal-disclaimer { text-align:center; font-size:0.75rem; color:var(--gray); margin-top:0.9rem; line-height:1.6; }
+    /* CONTACT */
+    .contact { background:var(--navy); border-top:1px solid rgba(200,146,42,0.1); }
+    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+    .contact-form { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.14); border-radius:16px; padding:2.4rem; }
+    .form-title { font-family:'Barlow Condensed',sans-serif; font-size:1.15rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.7rem; color:var(--gold); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-group { margin-bottom:1.1rem; }
+    .form-group label { display:block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--gray); margin-bottom:0.45rem; }
+    .form-group input, .form-group select, .form-group textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:7px; padding:0.78rem 1rem; color:var(--white); font-family:'Barlow',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:rgba(200,146,42,0.45); }
+    .form-group select option { background:var(--deep); }
+    .form-group textarea { resize:vertical; min-height:95px; }
+    .submit-btn { width:100%; background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy); border:none; padding:0.95rem; border-radius:7px; font-family:'Barlow Condensed',sans-serif; font-size:0.97rem; font-weight:700; letter-spacing:0.11em; text-transform:uppercase; cursor:pointer; transition:opacity 0.2s,transform 0.2s; margin-top:0.4rem; }
+    .submit-btn:hover { opacity:0.88; transform:translateY(-1px); }
+    .contact-info { display:flex; flex-direction:column; gap:1.8rem; }
+    .contact-item { display:flex; gap:1.1rem; align-items:flex-start; }
+    .contact-icon { width:42px; height:42px; background:rgba(200,146,42,0.09); border:1px solid rgba(200,146,42,0.22); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex-shrink:0; }
+    .contact-label { font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.14em; font-weight:600; margin-bottom:0.25rem; }
+    .contact-value { font-size:0.93rem; color:var(--light); line-height:1.5; }
+    /* FOOTER */
+    footer { background:#060e1b; padding:2.6rem 5%; border-top:1px solid rgba(200,146,42,0.1); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.4rem; }
+    .footer-brand { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; }
+    .footer-brand span { color:var(--gold); }
+    .footer-copy { font-size:0.78rem; color:var(--gray); }
+    .footer-links { display:flex; gap:1.4rem; }
+    .footer-links a { font-size:0.78rem; color:var(--gray); text-decoration:none; transition:color 0.2s; }
+    .footer-links a:hover { color:var(--gold); }
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    /* RESPONSIVE */
+    @media (max-width:960px) {
+      .hero { grid-template-columns:1fr; padding-top:7rem; }
+      .hero-visual { display:none; }
+      .services-layout { grid-template-columns:1fr; gap:2.5rem; }
+      .services-intro { position:static; }
+      .about-layout { grid-template-columns:1fr; gap:3rem; }
+      .contact-layout { grid-template-columns:1fr; gap:3rem; }
+      .partners-grid { grid-template-columns:1fr; max-width:420px; }
+      .metrics-row { grid-template-columns:1fr 1fr; }
+      .jobs-grid { grid-template-columns:1fr 1fr; }
+      .careers-intro { grid-template-columns:1fr; }
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+    }
+    @media (max-width:560px) {
+      .services-grid { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; }
+      .mform-row { grid-template-columns:1fr; }
+      .jobs-grid { grid-template-columns:1fr; }
+      .metrics-row { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-mark">A</div>
+    <div>
+      <div class="logo-text">Aditya Enterprise</div>
+      <div class="logo-sub">Loan Recovery Agency</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#partners">Partners</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#careers">Careers</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#partners" onclick="toggleMenu()">Partners</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#careers" onclick="toggleMenu()">Careers</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>Trusted Recovery Partner Since 2010</div>
+    <h1>Professional<br><span class="h1-accent">Loan Recovery</span> Solutions</h1>
+    <p class="hero-desc">Aditya Enterprise is a leading loan recovery agency working in strategic collaboration with Bajaj, Hero, and Mahindra — delivering efficient, compliant, and professional recovery services across India.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+      <a href="#careers" class="btn-outline">We're Hiring</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stats-card">
+      <div class="stats-grid">
+        <div class="stat-item"><span class="stat-num">98%</span><span class="stat-label">Recovery Rate</span></div>
+        <div class="sdiv"></div>
+        <div class="stat-item"><span class="stat-num">15K+</span><span class="stat-label">Cases Resolved</span></div>
+        <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Major Partners</span></div>
+        <div class="sdiv"></div>
+        <div class="stat-item"><span class="stat-num">14+</span><span class="stat-label">Years Active</span></div>
+      </div>
+      <div class="partner-strip">
+        <div class="partner-label">Authorised by</div>
+        <div class="partner-pills">
+          <span class="ppill">Bajaj Finance</span>
+          <span class="ppill">Hero FinCorp</span>
+          <span class="ppill">Mahindra Finance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" id="partners">
+  <div class="partners-header">
+    <div class="section-label">Our Collaborations</div>
+    <div class="section-title" style="text-align:center">Authorised Recovery Partner</div>
+  </div>
+  <div class="partners-grid">
+    <div class="partner-card bajaj">
+      <div class="partner-icon">B</div>
+      <div class="partner-name">Bajaj Finance</div>
+      <div class="partner-type">Financial Services</div>
+      <p class="partner-desc">Authorised recovery agent for Bajaj Finance Ltd — managing two-wheeler and consumer durable loan recovery operations across our operational zones.</p>
+    </div>
+    <div class="partner-card hero-p">
+      <div class="partner-icon">H</div>
+      <div class="partner-name">Hero FinCorp</div>
+      <div class="partner-type">Two-Wheeler Finance</div>
+      <p class="partner-desc">Trusted partner for Hero FinCorp's field recovery operations — handling vehicle loan collections with a customer-first approach.</p>
+    </div>
+    <div class="partner-card mahindra">
+      <div class="partner-icon">M</div>
+      <div class="partner-name">Mahindra Finance</div>
+      <div class="partner-type">Auto &amp; Rural Finance</div>
+      <p class="partner-desc">Official collaboration with Mahindra &amp; Mahindra Financial Services for vehicle and equipment loan recovery across rural and semi-urban regions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-layout">
+    <div class="services-intro">
+      <div class="section-label">What We Do</div>
+      <div class="section-title">End-to-End Recovery Services</div>
+      <p class="section-desc">Structured, compliant, and result-oriented loan recovery services tailored to each partner's requirements and regulatory framework.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card"><span class="service-icon">&#127949;&#65039;</span><div class="service-title">Vehicle Loan Recovery</div><p class="service-desc">Specialised field teams for two-wheeler and four-wheeler loan recovery with legal compliance and full documentation.</p></div>
+      <div class="service-card"><span class="service-icon">&#128203;</span><div class="service-title">Pre-Default Engagement</div><p class="service-desc">Proactive borrower outreach via calls, field visits, and reminder notices before accounts turn NPA.</p></div>
+      <div class="service-card"><span class="service-icon">&#9878;&#65039;</span><div class="service-title">Legal Recovery Support</div><p class="service-desc">Coordination with legal teams for arbitration, possession certificates, and court-directed recovery processes.</p></div>
+      <div class="service-card"><span class="service-icon">&#128269;</span><div class="service-title">Skip Tracing</div><p class="service-desc">Locating absconding borrowers using database research, field intelligence, and verification networks.</p></div>
+      <div class="service-card"><span class="service-icon">&#128202;</span><div class="service-title">Portfolio Analysis</div><p class="service-desc">Data-driven assessment of delinquent portfolios to prioritise recovery efforts and improve cash flow.</p></div>
+      <div class="service-card"><span class="service-icon">&#129309;</span><div class="service-title">Settlement Facilitation</div><p class="service-desc">Negotiating structured settlement plans between lenders and borrowers for mutually beneficial resolutions.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-layout">
+    <div class="founder-card">
+      <div class="founder-avatar">RJ</div>
+      <div class="founder-name">Rajeev Jha</div>
+      <div class="founder-title">Founder &amp; Managing Director &mdash; Aditya Enterprise</div>
+      <p class="founder-quote">"Our foundation rests on three pillars &mdash; integrity, compliance, and results. Every case is handled with the professionalism that our clients and borrowers both deserve. We don't just recover money; we protect long-term relationships."</p>
+    </div>
+    <div class="about-values">
+      <div class="section-label">Our Philosophy</div>
+      <div class="section-title">Built on Trust &amp; Results</div>
+      <div class="value-item"><span class="value-num">01</span><div><div class="value-title">Regulatory Compliance</div><p class="value-desc">All operations adhere to RBI guidelines and fair practice codes &mdash; protecting both lenders and borrowers.</p></div></div>
+      <div class="value-item"><span class="value-num">02</span><div><div class="value-title">Field Excellence</div><p class="value-desc">Trained recovery agents with domain expertise, ethical conduct guidelines, and GPS-tracked field operations.</p></div></div>
+      <div class="value-item"><span class="value-num">03</span><div><div class="value-title">Transparent Reporting</div><p class="value-desc">Real-time MIS reports, daily updates, and full transparency to our partner institutions at every stage.</p></div></div>
+      <div class="value-item"><span class="value-num">04</span><div><div class="value-title">Pan-India Network</div><p class="value-desc">Strong presence across Bihar, Jharkhand, UP &mdash; with a deep-rooted local intelligence network.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="why-us">
+  <div class="section-label">By The Numbers</div>
+  <div class="section-title">Proven Track Record</div>
+  <p class="section-desc">Over a decade of delivering exceptional recovery outcomes for India's leading financial institutions.</p>
+  <div class="metrics-row">
+    <div class="metric"><span class="metric-num">98<span class="metric-suffix">%</span></span><div class="metric-label">Average Recovery Rate</div></div>
+    <div class="metric"><span class="metric-num">15<span class="metric-suffix">K+</span></span><div class="metric-label">Cases Handled</div></div>
+    <div class="metric"><span class="metric-num">14<span class="metric-suffix">+</span></span><div class="metric-label">Years of Experience</div></div>
+    <div class="metric"><span class="metric-num">3</span><div class="metric-label">Major NBFC Partners</div></div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section class="careers" id="careers">
+  <div class="careers-intro">
+    <div>
+      <div class="hiring-tag"><span class="hiring-dot"></span>Now Hiring &mdash; Multiple Positions Open</div>
+      <div class="section-label">Join Our Team</div>
+      <div class="section-title">Work With the Best<br>in Recovery</div>
+    </div>
+    <p class="careers-note">We are expanding our field operations and back-office team across Bihar and surrounding states. If you are driven, trustworthy, and want to build a real career in financial services &mdash; we want to hear from you. Applications go directly to our founder, Rajeev Jha.</p>
+  </div>
+  <div class="jobs-grid">
+    <div class="job-card" onclick="openModal('Field Recovery Agent','Full-Time &middot; Field Role &middot; Patna &amp; Districts')">
+      <span class="job-icon">&#128661;</span>
+      <div class="job-role">Field Recovery Agent</div>
+      <div class="job-location">&#128205; Patna &amp; Surrounding Districts</div>
+      <p class="job-desc">Visit borrowers at their homes or workplaces, collect outstanding EMI payments, and maintain accurate records for each assigned case.</p>
+      <div class="job-tags"><span class="job-tag">Full-Time</span><span class="job-tag">Field Work</span><span class="job-tag">Bike Preferred</span></div>
+      <button class="apply-btn">Apply Now &#8594;</button>
+    </div>
+    <div class="job-card" onclick="openModal('Telecalling Executive','Full-Time &middot; Office Role &middot; Patna')">
+      <span class="job-icon">&#128222;</span>
+      <div class="job-role">Telecalling Executive</div>
+      <div class="job-location">&#128205; Patna Office</div>
+      <p class="job-desc">Make outbound calls to loan defaulters, remind them of dues, negotiate repayment plans, and maintain daily call logs.</p>
+      <div class="job-tags"><span class="job-tag">Full-Time</span><span class="job-tag">Office</span><span class="job-tag">Hindi Required</span></div>
+      <button class="apply-btn">Apply Now &#8594;</button>
+    </div>
+    <div class="job-card" onclick="openModal('Recovery Supervisor','Full-Time &middot; Leadership &middot; Bihar Zone')">
+      <span class="job-icon">&#128203;</span>
+      <div class="job-role">Recovery Supervisor</div>
+      <div class="job-location">&#128205; Patna &amp; Bihar Zone</div>
+      <p class="job-desc">Lead a team of field agents, assign daily cases, review collection reports, and be the main point of contact with partner companies.</p>
+      <div class="job-tags"><span class="job-tag">Leadership</span><span class="job-tag">3+ Yrs Exp</span><span class="job-tag">Full-Time</span></div>
+      <button class="apply-btn">Apply Now &#8594;</button>
+    </div>
+    <div class="job-card" onclick="openModal('Back Office Executive','Full-Time &middot; Office Role &middot; Patna')">
+      <span class="job-icon">&#128193;</span>
+      <div class="job-role">Back Office Executive</div>
+      <div class="job-location">&#128205; Patna Office</div>
+      <p class="job-desc">Handle data entry, document verification, MIS preparation, and coordinate between field teams and finance partners.</p>
+      <div class="job-tags"><span class="job-tag">Office</span><span class="job-tag">Computer Skills</span><span class="job-tag">Full-Time</span></div>
+      <button class="apply-btn">Apply Now &#8594;</button>
+    </div>
+    <div class="job-card" onclick="openModal('Legal &amp; Documentation Assistant','Full-Time &middot; Office Role &middot; Patna')">
+      <span class="job-icon">&#9878;&#65039;</span>
+      <div class="job-role">Legal &amp; Documentation Assistant</div>
+      <div class="job-location">&#128205; Patna Office</div>
+      <p class="job-desc">Assist in preparing legal notices, court documents, possession certificates, and manage case files for legal recovery proceedings.</p>
+      <div class="job-tags"><span class="job-tag">Legal Background</span><span class="job-tag">Documentation</span><span class="job-tag">Full-Time</span></div>
+      <button class="apply-btn">Apply Now &#8594;</button>
+    </div>
+    <div class="job-card" onclick="openModal('Field Verification Officer','Full-Time &middot; Field Role &middot; Bihar &amp; Jharkhand')">
+      <span class="job-icon">&#128269;</span>
+      <div class="job-role">Field Verification Officer</div>
+      <div class="job-location">&#128205; Bihar &amp; Jharkhand</div>
+      <p class="job-desc">Verify borrower addresses, employment status, and conduct physical verification of assets for skip tracing and pre-disbursement checks.</p>
+      <div class="job-tags"><span class="job-tag">Field Work</span><span class="job-tag">Bike Required</span><span class="job-tag">Full-Time</span></div>
+      <button class="apply-btn">Apply Now &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-layout">
+    <div>
+      <div class="section-label">Reach Us</div>
+      <div class="section-title">Let's Work<br>Together</div>
+      <p class="section-desc" style="margin-bottom:2.4rem">Whether you're a financial institution looking for a recovery partner, or need assistance with loan resolution &mdash; we are here to help.</p>
+      <div class="contact-info">
+        <div class="contact-item"><div class="contact-icon">&#128205;</div><div><div class="contact-label">Office Address</div><div class="contact-value">Aditya Enterprise, Patna, Bihar, India</div></div></div>
+        <div class="contact-item"><div class="contact-icon">&#128222;</div><div><div class="contact-label">Phone</div><div class="contact-value">+91 77393 31422</div></div></div>
+        <div class="contact-item"><div class="contact-icon">&#9993;&#65039;</div><div><div class="contact-label">Email</div><div class="contact-value">contact@adityaenterprise.in</div></div></div>
+        <div class="contact-item"><div class="contact-icon">&#128336;</div><div><div class="contact-label">Working Hours</div><div class="contact-value">Monday &ndash; Saturday: 9:00 AM &ndash; 6:00 PM</div></div></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-title">Send an Enquiry</div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" id="cName" placeholder="Your name" /></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" id="cPhone" placeholder="+91 XXXXX XXXXX" /></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="cEmail" placeholder="you@example.com" /></div>
+      <div class="form-group"><label>Enquiry Type</label>
+        <select id="cType">
+          <option>Partnership / Collaboration</option>
+          <option>Loan Recovery Assistance</option>
+          <option>Employment / Careers</option>
+          <option>General Enquiry</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea id="cMsg" placeholder="Describe your requirement..."></textarea></div>
+      <button class="submit-btn" onclick="submitEnquiry()">Submit via WhatsApp &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Aditya <span>Enterprise</span></div>
+    <div class="footer-copy" style="margin-top:0.35rem">Founded by Rajeev Jha &middot; Patna, Bihar</div>
+  </div>
+  <div class="footer-copy">&copy; 2024 Aditya Enterprise. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#partners">Partners</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#careers">Careers</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- JOB APPLICATION MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="appModal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+      <div class="modal-role-badge">&#128226; Open Position</div>
+      <div class="modal-title" id="modalTitle">Field Recovery Agent</div>
+      <div class="modal-subtitle" id="modalSubtitle">Full-Time &middot; Patna, Bihar</div>
+    </div>
+    <div class="modal-body">
+      <div class="mform-row">
+        <div class="mform-group"><label>Full Name *</label><input type="text" id="appName" placeholder="e.g. Amit Kumar" /></div>
+        <div class="mform-group"><label>Phone Number *</label><input type="tel" id="appPhone" placeholder="+91 XXXXX XXXXX" /></div>
+      </div>
+      <div class="mform-group"><label>Current Address</label><input type="text" id="appAddress" placeholder="e.g. Boring Road, Patna" /></div>
+      <div class="mform-row">
+        <div class="mform-group"><label>Age</label><input type="number" id="appAge" placeholder="e.g. 24" min="18" max="60" /></div>
+        <div class="mform-group"><label>Education</label>
+          <select id="appEdu">
+            <option value="">Select qualification</option>
+            <option>8th Pass</option>
+            <option>10th Pass</option>
+            <option>12th Pass</option>
+            <option>Graduation</option>
+            <option>Post Graduation</option>
+          </select>
+        </div>
+      </div>
+      <div class="mform-row">
+        <div class="mform-group"><label>Work Experience</label>
+          <select id="appExp">
+            <option value="">Select experience</option>
+            <option>Fresher</option>
+            <option>Less than 1 Year</option>
+            <option>1 - 2 Years</option>
+            <option>2 - 4 Years</option>
+            <option>4+ Years</option>
+          </select>
+        </div>
+        <div class="mform-group"><label>Do You Have a Bike?</label>
+          <select id="appBike">
+            <option value="">Select</option>
+            <option>Yes, with valid licence</option>
+            <option>Yes, no licence yet</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+      <div class="mform-group">
+        <label>Why do you want to join Aditya Enterprise?</label>
+        <textarea id="appWhy" placeholder="Tell us a bit about yourself and why you are interested in this role..."></textarea>
+      </div>
+      <button class="wa-submit" onclick="sendViaWhatsApp()">
+        <span class="wa-icon">&#128172;</span> Send Application via WhatsApp
+      </button>
+      <p class="modal-disclaimer">
+        Your application goes directly to <strong>Rajeev Jha (Founder)</strong> on WhatsApp.<br>
+        We typically reply within <strong>24 hours</strong>. No spam, ever.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  var currentRole = '';
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function openModal(role, subtitle) {
+    currentRole = role;
+    document.getElementById('modalTitle').innerHTML = role;
+    document.getElementById('modalSubtitle').innerHTML = subtitle;
+    ['appName','appPhone','appAddress','appAge','appWhy'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+    ['appEdu','appExp','appBike'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.selectedIndex = 0;
+    });
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if(e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  function sendViaWhatsApp() {
+    var name    = document.getElementById('appName').value.trim();
+    var phone   = document.getElementById('appPhone').value.trim();
+    var address = document.getElementById('appAddress').value.trim();
+    var age     = document.getElementById('appAge').value.trim();
+    var edu     = document.getElementById('appEdu').value;
+    var exp     = document.getElementById('appExp').value;
+    var bike    = document.getElementById('appBike').value;
+    var why     = document.getElementById('appWhy').value.trim();
+
+    if(!name || !phone) {
+      alert('Please fill in your Name and Phone Number before sending.');
+      return;
+    }
+
+    var msg = '*Job Application - Aditya Enterprise*\n\n'
+      + '*Position:* ' + currentRole + '\n\n'
+      + '*Name:* ' + name + '\n'
+      + '*Phone:* ' + phone + '\n'
+      + '*Address:* ' + (address || 'Not provided') + '\n'
+      + '*Age:* ' + (age || 'Not provided') + '\n'
+      + '*Education:* ' + (edu || 'Not provided') + '\n'
+      + '*Experience:* ' + (exp || 'Not provided') + '\n'
+      + '*Has Bike:* ' + (bike || 'Not provided') + '\n\n'
+      + '*About me:*\n' + (why || 'Not provided') + '\n\n'
+      + '_Sent via Aditya Enterprise Website_';
+
+    var url = 'https://wa.me/917739331422?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  }
+
+  function submitEnquiry() {
+    var name  = document.getElementById('cName').value.trim();
+    var phone = document.getElementById('cPhone').value.trim();
+    var email = document.getElementById('cEmail').value.trim();
+    var type  = document.getElementById('cType').value;
+    var msg2  = document.getElementById('cMsg').value.trim();
+
+    if(!name || !phone) {
+      alert('Please provide your Name and Phone Number before submitting.');
+      return;
+    }
+
+    var msg = '*New Enquiry - Aditya Enterprise*\n\n'
+      + '*Name:* ' + name + '\n'
+      + '*Phone:* ' + phone + '\n'
+      + '*Email:* ' + (email || 'Not provided') + '\n'
+      + '*Type:* ' + type + '\n\n'
+      + '*Message:*\n' + (msg2 || 'No message provided') + '\n\n'
+      + '_Sent via adityaenterprise.in_';
+
+    var url = 'https://wa.me/917739331422?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  }
+</script>
+</body>
+</html>
