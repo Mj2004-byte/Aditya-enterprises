@@ -5,229 +5,598 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aditya Enterprise | Loan Recovery Agency</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --navy:#0a1628; --deep:#0d1f3c; --accent:#c8922a; --gold:#e8b84b;
-      --white:#f7f4ef; --gray:#8a97aa; --light:#e8e4dc; --green:#25d366;
+      --blue-950: #06101f;
+      --blue-900: #0b1a30;
+      --blue-800: #102240;
+      --blue-700: #153055;
+      --blue-600: #1a3f70;
+      --blue-500: #1e52a0;
+      --blue-400: #2d6dc7;
+      --blue-300: #5192e0;
+      --blue-200: #93bef0;
+      --blue-100: #ddeafc;
+      --blue-50:  #f0f6ff;
+      --white: #ffffff;
+      --off-white: #f8fafd;
+      --slate: #64748b;
+      --slate-light: #94a3b8;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --border-blue: rgba(30, 82, 160, 0.18);
+      --accent: #f59e0b;
     }
+
     html { scroll-behavior: smooth; }
-    body { font-family:'Barlow',sans-serif; background:var(--navy); color:var(--white); overflow-x:hidden; }
-    body::after {
-      content:''; position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events:none; z-index:9000;
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
-    /* NAV */
+
+    /* ── NAV ── */
     nav {
-      position:fixed; top:0; left:0; right:0; z-index:200;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:1.1rem 5%;
-      background:rgba(9,19,36,0.92); backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(200,146,42,0.12);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+      backdrop-filter: blur(12px);
     }
-    .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .logo-mark {
-      width:40px; height:40px;
-      background:linear-gradient(140deg,var(--accent),var(--gold));
-      border-radius:8px; display:flex; align-items:center; justify-content:center;
-      font-family:'Playfair Display',serif; font-weight:900; font-size:1.25rem;
-      color:var(--navy); box-shadow:0 2px 18px rgba(200,146,42,0.28);
+      width: 38px; height: 38px;
+      background: var(--blue-500);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Merriweather', serif;
+      font-weight: 900; font-size: 1.15rem;
+      color: #fff;
     }
-    .logo-text { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; line-height:1.2; color:var(--white); }
-    .logo-sub { font-family:'Barlow Condensed',sans-serif; font-size:0.6rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); }
-    .nav-links { display:flex; gap:1.8rem; list-style:none; }
-    .nav-links a { color:var(--light); text-decoration:none; font-size:0.82rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; transition:color 0.2s; }
-    .nav-links a:hover { color:var(--gold); }
-    .nav-cta { background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy)!important; padding:0.48rem 1.3rem; border-radius:5px; font-weight:700!important; }
-    .nav-cta:hover { opacity:0.88; }
-    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
-    .hamburger span { display:block; width:24px; height:2px; background:var(--light); border-radius:2px; }
+    .logo-text {
+      font-family: 'Merriweather', serif;
+      font-size: 0.98rem; font-weight: 700;
+      color: var(--text); line-height: 1.2;
+    }
+    .logo-sub {
+      font-size: 0.6rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--slate); margin-top: 1px;
+    }
+    .nav-links { display: flex; gap: 0.2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none; font-size: 0.86rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--blue-500); background: var(--blue-50); }
+    .nav-cta {
+      background: var(--blue-500) !important;
+      color: #fff !important;
+      padding: 0.42rem 1.1rem !important;
+      border-radius: 6px !important;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--blue-600) !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
     .mobile-menu {
-      display:none; position:fixed; top:62px; left:0; right:0; z-index:190;
-      background:rgba(9,19,36,0.97); padding:1.5rem 5%; flex-direction:column; gap:1rem;
-      border-bottom:1px solid rgba(200,146,42,0.15);
+      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 1rem 5%; flex-direction: column; gap: 0.2rem;
     }
-    .mobile-menu a { color:var(--light); text-decoration:none; font-size:0.95rem; font-weight:500; padding:0.4rem 0; display:block; }
-    .mobile-menu.open { display:flex; }
-    /* HERO */
-    .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:4rem; padding:8rem 5% 5rem; position:relative; overflow:hidden; }
-    .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 55% 65% at 82% 50%,rgba(26,58,107,0.5) 0%,transparent 70%),radial-gradient(ellipse 35% 45% at 8% 85%,rgba(200,146,42,0.07) 0%,transparent 55%); }
-    .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(200,146,42,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(200,146,42,0.035) 1px,transparent 1px); background-size:55px 55px; }
-    .hero-content { position:relative; z-index:2; }
-    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.28); padding:0.38rem 1rem; border-radius:20px; font-size:0.7rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:1.4rem; animation:fadeUp 0.7s ease both; }
-    .badge-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation:blink 2.2s infinite; }
+    .mobile-menu a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.92rem; font-weight: 500;
+      padding: 0.55rem 0.75rem; border-radius: 6px; display: block;
+    }
+    .mobile-menu a:hover { background: var(--blue-50); color: var(--blue-500); }
+    .mobile-menu.open { display: flex; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding: 7rem 5% 5rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      background: var(--off-white);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(30,82,160,0.06) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -60px; left: 30%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(30,82,160,0.04) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #fff; border: 1px solid var(--border);
+      padding: 0.32rem 0.85rem; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--blue-500);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .badge-dot {
+      width: 6px; height: 6px; background: #22c55e;
+      border-radius: 50%; animation: blink 2s infinite;
+    }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    h1 { font-family:'Playfair Display',serif; font-size:clamp(2.6rem,5vw,4.2rem); font-weight:900; line-height:1.06; margin-bottom:1.4rem; animation:fadeUp 0.7s 0.1s ease both; }
-    .h1-accent { color:var(--gold); display:block; }
-    .hero-desc { font-size:1rem; color:var(--gray); line-height:1.8; max-width:490px; margin-bottom:2.4rem; font-weight:300; animation:fadeUp 0.7s 0.2s ease both; }
-    .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp 0.7s 0.3s ease both; }
-    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy); padding:0.88rem 2.1rem; border-radius:5px; font-weight:700; font-size:0.88rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 4px 18px rgba(200,146,42,0.28); }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(200,146,42,0.38); }
-    .btn-outline { border:1.5px solid rgba(200,146,42,0.38); color:var(--gold); padding:0.88rem 2.1rem; border-radius:5px; font-weight:600; font-size:0.88rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; transition:background 0.2s,border-color 0.2s; }
-    .btn-outline:hover { background:rgba(200,146,42,0.07); border-color:var(--gold); }
-    .hero-visual { position:relative; z-index:2; animation:fadeIn 1s 0.4s ease both; }
-    .stats-card { background:rgba(255,255,255,0.035); border:1px solid rgba(200,146,42,0.18); border-radius:18px; padding:2rem 1.8rem; backdrop-filter:blur(18px); position:relative; overflow:hidden; }
-    .stats-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--gold),transparent); }
-    .stats-grid { display:grid; grid-template-columns:1fr 1px 1fr; gap:1.4rem; margin-bottom:1.5rem; align-items:center; }
-    .sdiv { background:rgba(200,146,42,0.12); align-self:stretch; }
-    .stat-item { text-align:center; }
-    .stat-num { font-family:'Playfair Display',serif; font-size:2.3rem; font-weight:900; color:var(--gold); line-height:1; display:block; }
-    .stat-label { font-size:0.72rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.25rem; font-weight:500; }
-    .partner-strip { border-top:1px solid rgba(255,255,255,0.06); padding-top:1.1rem; }
-    .partner-label { font-size:0.62rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.16em; margin-bottom:0.7rem; font-weight:600; }
-    .partner-pills { display:flex; gap:0.6rem; flex-wrap:wrap; }
-    .ppill { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); padding:0.28rem 0.75rem; border-radius:20px; font-size:0.72rem; font-weight:600; color:var(--light); }
-    /* SHARED */
-    section { padding:5.5rem 5%; }
-    .section-label { font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent); margin-bottom:0.6rem; }
-    .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.2vw,2.7rem); font-weight:900; line-height:1.15; margin-bottom:0.9rem; }
-    .section-desc { color:var(--gray); font-size:0.96rem; line-height:1.75; max-width:510px; font-weight:300; }
-    /* PARTNERS */
-    .partners { background:var(--deep); border-top:1px solid rgba(200,146,42,0.1); border-bottom:1px solid rgba(200,146,42,0.1); padding:4rem 5%; }
-    .partners-header { text-align:center; margin-bottom:2.8rem; }
-    .partners-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem; max-width:980px; margin:0 auto; }
-    .partner-card { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.13); border-radius:14px; padding:2.4rem 1.8rem; text-align:center; transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s; position:relative; overflow:hidden; }
-    .partner-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); transform:scaleX(0); transition:transform 0.3s; transform-origin:left; }
-    .partner-card:hover { transform:translateY(-5px); border-color:rgba(200,146,42,0.35); box-shadow:0 18px 44px rgba(0,0,0,0.28); }
-    .partner-card:hover::after { transform:scaleX(1); }
-    .partner-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:900; margin:0 auto 1rem; font-family:'Playfair Display',serif; }
-    .bajaj .partner-icon { background:rgba(0,82,204,0.12); color:#5daaff; border:1px solid rgba(0,82,204,0.25); }
-    .hero-p .partner-icon { background:rgba(0,153,68,0.12); color:#5dcc90; border:1px solid rgba(0,153,68,0.25); }
-    .mahindra .partner-icon { background:rgba(204,0,0,0.12); color:#ff7070; border:1px solid rgba(204,0,0,0.25); }
-    .partner-name { font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:0.3rem; }
-    .partner-type { font-size:0.75rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.12em; font-weight:600; margin-bottom:0.7rem; }
-    .partner-desc { font-size:0.85rem; color:var(--gray); line-height:1.65; }
-    /* SERVICES */
-    .services { background:var(--navy); }
-    .services-layout { display:grid; grid-template-columns:1fr 2fr; gap:4.5rem; align-items:start; }
-    .services-intro { position:sticky; top:8rem; }
-    .services-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.3rem; }
-    .service-card { background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.065); border-radius:12px; padding:1.7rem; transition:border-color 0.3s,background 0.3s; }
-    .service-card:hover { border-color:rgba(200,146,42,0.28); background:rgba(200,146,42,0.035); }
-    .service-icon { font-size:1.9rem; margin-bottom:0.9rem; display:block; }
-    .service-title { font-family:'Barlow Condensed',sans-serif; font-size:1.05rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:0.5rem; color:var(--light); }
-    .service-desc { font-size:0.84rem; color:var(--gray); line-height:1.65; }
-    /* ABOUT */
-    .about { background:var(--deep); border-top:1px solid rgba(200,146,42,0.1); }
-    .about-layout { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
-    .founder-card { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.18); border-radius:20px; padding:2.8rem 2.4rem; position:relative; overflow:hidden; }
-    .founder-card::before { content:'"'; position:absolute; top:-30px; right:14px; font-family:'Playfair Display',serif; font-size:13rem; color:rgba(200,146,42,0.04); line-height:1; pointer-events:none; }
-    .founder-avatar { width:76px; height:76px; background:linear-gradient(140deg,var(--accent),var(--gold)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:1.4rem; box-shadow:0 0 28px rgba(200,146,42,0.28); }
-    .founder-name { font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:700; margin-bottom:0.25rem; }
-    .founder-title { font-size:0.72rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.16em; font-weight:600; margin-bottom:1.1rem; }
-    .founder-quote { font-size:0.93rem; color:var(--gray); line-height:1.78; font-style:italic; border-left:2px solid var(--accent); padding-left:1.1rem; }
-    .about-values { display:flex; flex-direction:column; gap:1.4rem; }
-    .value-item { display:flex; gap:1.1rem; align-items:flex-start; }
-    .value-num { font-family:'Playfair Display',serif; font-size:1.9rem; font-weight:900; color:rgba(200,146,42,0.25); line-height:1; min-width:38px; }
-    .value-title { font-family:'Barlow Condensed',sans-serif; font-size:0.98rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.25rem; color:var(--light); }
-    .value-desc { font-size:0.85rem; color:var(--gray); line-height:1.65; }
-    /* METRICS */
-    .why-us { background:var(--navy); text-align:center; }
-    .why-us .section-title, .why-us .section-desc { margin-left:auto; margin-right:auto; }
-    .metrics-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem; margin-top:3.5rem; padding-top:2.8rem; border-top:1px solid rgba(200,146,42,0.1); }
-    .metric { padding:1.8rem 1rem; border-radius:12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); transition:border-color 0.3s; }
-    .metric:hover { border-color:rgba(200,146,42,0.22); }
-    .metric-num { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--gold); display:block; line-height:1; }
-    .metric-suffix { color:var(--accent); font-size:1.7rem; }
-    .metric-label { font-size:0.77rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.45rem; font-weight:500; }
-    /* CAREERS */
-    .careers { background:var(--deep); border-top:1px solid rgba(200,146,42,0.1); }
-    .careers-intro { display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-bottom:3rem; align-items:end; }
-    .hiring-tag { display:inline-flex; align-items:center; gap:7px; background:rgba(37,211,102,0.1); border:1px solid rgba(37,211,102,0.25); padding:0.32rem 0.85rem; border-radius:20px; font-size:0.68rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#5dcc90; margin-bottom:1rem; }
-    .hiring-dot { width:6px; height:6px; background:#5dcc90; border-radius:50%; animation:blink 1.8s infinite; }
-    .careers-note { font-size:0.9rem; color:var(--gray); line-height:1.7; font-weight:300; }
-    .jobs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
-    .job-card { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.14); border-radius:14px; padding:1.8rem; cursor:pointer; transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s; position:relative; overflow:hidden; }
-    .job-card:hover { transform:translateY(-5px); border-color:rgba(200,146,42,0.4); box-shadow:0 16px 40px rgba(0,0,0,0.25); }
-    .job-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--gold)); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
-    .job-card:hover::before { transform:scaleX(1); }
-    .job-icon { font-size:2rem; margin-bottom:1rem; display:block; }
-    .job-role { font-family:'Barlow Condensed',sans-serif; font-size:1.15rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--light); margin-bottom:0.4rem; }
-    .job-location { font-size:0.75rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.8rem; }
-    .job-desc { font-size:0.84rem; color:var(--gray); line-height:1.65; margin-bottom:1.2rem; }
-    .job-tags { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.2rem; }
-    .job-tag { background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.18); padding:0.2rem 0.65rem; border-radius:12px; font-size:0.7rem; font-weight:600; color:var(--gold); letter-spacing:0.05em; }
-    .apply-btn { display:flex; align-items:center; justify-content:center; gap:7px; background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy); padding:0.62rem 1.3rem; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-size:0.88rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; border:none; cursor:pointer; transition:opacity 0.2s,transform 0.2s; width:100%; }
-    .apply-btn:hover { opacity:0.88; transform:translateY(-1px); }
-    /* MODAL */
-    .modal-overlay { display:none; position:fixed; inset:0; z-index:5000; background:rgba(5,12,25,0.88); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1rem; }
-    .modal-overlay.open { display:flex; }
-    .modal { background:#0e1e36; border:1px solid rgba(200,146,42,0.22); border-radius:20px; width:100%; max-width:580px; max-height:92vh; overflow-y:auto; position:relative; animation:slideUp 0.35s ease; }
-    @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-    .modal::-webkit-scrollbar { width:5px; }
-    .modal::-webkit-scrollbar-thumb { background:rgba(200,146,42,0.3); border-radius:10px; }
-    .modal-header { padding:2rem 2rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.06); position:sticky; top:0; background:#0e1e36; z-index:2; }
-    .modal-close { position:absolute; top:1.2rem; right:1.4rem; background:rgba(255,255,255,0.06); border:none; color:var(--gray); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s,color 0.2s; }
-    .modal-close:hover { background:rgba(200,146,42,0.15); color:var(--gold); }
-    .modal-role-badge { display:inline-flex; align-items:center; gap:7px; background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.22); padding:0.28rem 0.8rem; border-radius:16px; font-size:0.68rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem; }
-    .modal-title { font-family:'Playfair Display',serif; font-size:1.55rem; font-weight:700; line-height:1.2; }
-    .modal-subtitle { font-size:0.83rem; color:var(--gray); margin-top:0.3rem; }
-    .modal-body { padding:1.6rem 2rem 2rem; }
-    .mform-group { margin-bottom:1.1rem; }
-    .mform-group label { display:block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--gray); margin-bottom:0.45rem; }
-    .mform-group input, .mform-group select, .mform-group textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:8px; padding:0.75rem 1rem; color:var(--white); font-family:'Barlow',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
-    .mform-group input:focus, .mform-group select:focus, .mform-group textarea:focus { border-color:rgba(200,146,42,0.45); }
-    .mform-group input::placeholder, .mform-group textarea::placeholder { color:rgba(138,151,170,0.5); }
-    .mform-group select option { background:#0e1e36; }
-    .mform-group textarea { resize:vertical; min-height:88px; }
-    .mform-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .wa-submit { width:100%; margin-top:0.5rem; background:var(--green); color:#fff; border:none; padding:0.95rem 1.5rem; border-radius:8px; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:opacity 0.2s,transform 0.2s; display:flex; align-items:center; justify-content:center; gap:10px; }
-    .wa-submit:hover { opacity:0.9; transform:translateY(-1px); }
-    .wa-icon { font-size:1.15rem; }
-    .modal-disclaimer { text-align:center; font-size:0.75rem; color:var(--gray); margin-top:0.9rem; line-height:1.6; }
-    /* CONTACT */
-    .contact { background:var(--navy); border-top:1px solid rgba(200,146,42,0.1); }
-    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
-    .contact-form { background:rgba(255,255,255,0.025); border:1px solid rgba(200,146,42,0.14); border-radius:16px; padding:2.4rem; }
-    .form-title { font-family:'Barlow Condensed',sans-serif; font-size:1.15rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.7rem; color:var(--gold); }
-    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .form-group { margin-bottom:1.1rem; }
-    .form-group label { display:block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--gray); margin-bottom:0.45rem; }
-    .form-group input, .form-group select, .form-group textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:7px; padding:0.78rem 1rem; color:var(--white); font-family:'Barlow',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:rgba(200,146,42,0.45); }
-    .form-group select option { background:var(--deep); }
-    .form-group textarea { resize:vertical; min-height:95px; }
-    .submit-btn { width:100%; background:linear-gradient(135deg,var(--accent),var(--gold)); color:var(--navy); border:none; padding:0.95rem; border-radius:7px; font-family:'Barlow Condensed',sans-serif; font-size:0.97rem; font-weight:700; letter-spacing:0.11em; text-transform:uppercase; cursor:pointer; transition:opacity 0.2s,transform 0.2s; margin-top:0.4rem; }
-    .submit-btn:hover { opacity:0.88; transform:translateY(-1px); }
-    .contact-info { display:flex; flex-direction:column; gap:1.8rem; }
-    .contact-item { display:flex; gap:1.1rem; align-items:flex-start; }
-    .contact-icon { width:42px; height:42px; background:rgba(200,146,42,0.09); border:1px solid rgba(200,146,42,0.22); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex-shrink:0; }
-    .contact-label { font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.14em; font-weight:600; margin-bottom:0.25rem; }
-    .contact-value { font-size:0.93rem; color:var(--light); line-height:1.5; }
-    /* FOOTER */
-    footer { background:#060e1b; padding:2.6rem 5%; border-top:1px solid rgba(200,146,42,0.1); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.4rem; }
-    .footer-brand { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; }
-    .footer-brand span { color:var(--gold); }
-    .footer-copy { font-size:0.78rem; color:var(--gray); }
-    .footer-links { display:flex; gap:1.4rem; }
-    .footer-links a { font-size:0.78rem; color:var(--gray); text-decoration:none; transition:color 0.2s; }
-    .footer-links a:hover { color:var(--gold); }
-    /* ANIMATIONS */
-    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    /* RESPONSIVE */
-    @media (max-width:960px) {
-      .hero { grid-template-columns:1fr; padding-top:7rem; }
-      .hero-visual { display:none; }
-      .services-layout { grid-template-columns:1fr; gap:2.5rem; }
-      .services-intro { position:static; }
-      .about-layout { grid-template-columns:1fr; gap:3rem; }
-      .contact-layout { grid-template-columns:1fr; gap:3rem; }
-      .partners-grid { grid-template-columns:1fr; max-width:420px; }
-      .metrics-row { grid-template-columns:1fr 1fr; }
-      .jobs-grid { grid-template-columns:1fr 1fr; }
-      .careers-intro { grid-template-columns:1fr; }
-      .nav-links { display:none; }
-      .hamburger { display:flex; }
+    h1 {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.4rem;
     }
-    @media (max-width:560px) {
-      .services-grid { grid-template-columns:1fr; }
-      .form-row { grid-template-columns:1fr; }
-      .mform-row { grid-template-columns:1fr; }
-      .jobs-grid { grid-template-columns:1fr; }
-      .metrics-row { grid-template-columns:1fr 1fr; }
+    .h1-accent { color: var(--blue-500); }
+    .hero-desc {
+      font-size: 1rem; color: var(--text-muted);
+      line-height: 1.75; max-width: 480px;
+      margin-bottom: 2.2rem; font-weight: 400;
+    }
+    .hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--blue-500); color: #fff;
+      padding: 0.78rem 1.9rem; border-radius: 7px;
+      font-weight: 600; font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px rgba(30,82,160,0.2);
+    }
+    .btn-primary:hover { background: var(--blue-600); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,82,160,0.28); }
+    .btn-outline {
+      border: 1.5px solid var(--border-blue); color: var(--blue-500);
+      padding: 0.78rem 1.9rem; border-radius: 7px;
+      font-weight: 600; font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-outline:hover { background: var(--blue-50); border-color: var(--blue-400); }
+
+    /* stats card */
+    .stats-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem 1.8rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .stats-card::before {
+      content: ''; position: absolute; top: 0; left: 2rem; right: 2rem;
+      height: 3px; background: var(--blue-500); border-radius: 0 0 4px 4px;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1px 1fr;
+      gap: 1.3rem; margin-bottom: 1.5rem; align-items: center;
+    }
+    .sdiv { background: var(--border); align-self: stretch; }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Merriweather', serif;
+      font-size: 2.1rem; font-weight: 900;
+      color: var(--blue-500); line-height: 1; display: block;
+    }
+    .stat-label {
+      font-size: 0.7rem; color: var(--slate);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-top: 0.3rem; font-weight: 500;
+    }
+    .partner-strip { border-top: 1px solid var(--border); padding-top: 1.1rem; }
+    .partner-label {
+      font-size: 0.62rem; color: var(--slate);
+      text-transform: uppercase; letter-spacing: 0.15em;
+      margin-bottom: 0.6rem; font-weight: 600;
+    }
+    .partner-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .ppill {
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      padding: 0.25rem 0.7rem; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 600; color: var(--blue-600);
+    }
+
+    /* ── SHARED SECTION STYLES ── */
+    section { padding: 5rem 5%; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue-400); margin-bottom: 0.65rem;
+    }
+    .section-title {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-weight: 900; line-height: 1.2;
+      color: var(--text); margin-bottom: 0.85rem;
+    }
+    .section-desc {
+      color: var(--text-muted); font-size: 0.96rem;
+      line-height: 1.75; max-width: 490px; font-weight: 400;
+    }
+
+    /* ── PARTNERS ── */
+    .partners {
+      background: #fff; border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 4rem 5%;
+    }
+    .partners-header { text-align: center; margin-bottom: 3rem; }
+    .partners-header .section-desc { margin: 0 auto; text-align: center; }
+    .partners-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.4rem; max-width: 960px; margin: 0 auto;
+    }
+    .partner-card {
+      background: var(--off-white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2.2rem 1.8rem; text-align: center;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .partner-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue-200);
+      box-shadow: 0 12px 36px rgba(30,82,160,0.1);
+    }
+    .partner-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--blue-500);
+      transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+    }
+    .partner-card:hover::after { transform: scaleX(1); }
+    .partner-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; font-weight: 900; margin: 0 auto 1rem;
+      font-family: 'Merriweather', serif;
+    }
+    .bajaj .partner-icon { background: #e8f0fe; color: #1a56db; border: 1px solid #bfcffe; }
+    .hero-p .partner-icon { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .mahindra .partner-icon { background: #fff1f2; color: #dc2626; border: 1px solid #fecdd3; }
+    .partner-name {
+      font-family: 'Merriweather', serif; font-size: 1.05rem;
+      font-weight: 700; color: var(--text); margin-bottom: 0.25rem;
+    }
+    .partner-type {
+      font-size: 0.72rem; color: var(--blue-400);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      font-weight: 600; margin-bottom: 0.75rem;
+    }
+    .partner-desc { font-size: 0.86rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--off-white); }
+    .services-layout {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 5rem; align-items: start;
+    }
+    .services-intro { position: sticky; top: 8rem; }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .service-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.6rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .service-card:hover { border-color: var(--blue-200); box-shadow: 0 4px 20px rgba(30,82,160,0.08); }
+    .service-icon { font-size: 1.7rem; margin-bottom: 0.85rem; display: block; }
+    .service-title {
+      font-family: 'Merriweather', serif; font-size: 0.92rem;
+      font-weight: 700; margin-bottom: 0.5rem; color: var(--text);
+    }
+    .service-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── ABOUT ── */
+    .about {
+      background: #fff; border-top: 1px solid var(--border);
+    }
+    .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .founder-card {
+      background: var(--blue-500); border-radius: 16px;
+      padding: 2.8rem 2.4rem; position: relative; overflow: hidden;
+    }
+    .founder-card::before {
+      content: '"'; position: absolute; top: -40px; right: 10px;
+      font-family: 'Merriweather', serif; font-size: 14rem;
+      color: rgba(255,255,255,0.06); line-height: 1; pointer-events: none;
+    }
+    .founder-avatar {
+      width: 68px; height: 68px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Merriweather', serif; font-size: 1.6rem; font-weight: 900;
+      color: #fff; margin-bottom: 1.3rem;
+    }
+    .founder-name { font-family: 'Merriweather', serif; font-size: 1.45rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+    .founder-title { font-size: 0.7rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; margin-bottom: 1.2rem; }
+    .founder-quote {
+      font-size: 0.93rem; color: rgba(255,255,255,0.88);
+      line-height: 1.78; font-style: italic;
+      border-left: 3px solid rgba(255,255,255,0.3);
+      padding-left: 1.1rem;
+    }
+    .about-values { display: flex; flex-direction: column; gap: 1.5rem; }
+    .value-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .value-num {
+      font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500;
+      color: var(--blue-400); background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .value-title { font-family: 'Merriweather', serif; font-size: 0.92rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text); }
+    .value-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── METRICS ── */
+    .why-us {
+      background: var(--blue-500); text-align: center;
+    }
+    .why-us .section-label { color: rgba(255,255,255,0.6); }
+    .why-us .section-title { color: #fff; margin-left: auto; margin-right: auto; }
+    .why-us .section-desc { color: rgba(255,255,255,0.7); margin-left: auto; margin-right: auto; }
+    .metrics-row {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1.3rem; margin-top: 3rem;
+      padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .metric {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 1.8rem 1rem; border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .metric:hover { background: rgba(255,255,255,0.13); }
+    .metric-num {
+      font-family: 'Merriweather', serif;
+      font-size: 2.6rem; font-weight: 900;
+      color: #fff; display: block; line-height: 1;
+    }
+    .metric-suffix { color: rgba(255,255,255,0.6); font-size: 1.6rem; }
+    .metric-label { font-size: 0.76rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.45rem; font-weight: 500; }
+
+    /* ── CAREERS ── */
+    .careers { background: var(--off-white); border-top: 1px solid var(--border); }
+    .careers-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem; align-items: end;
+    }
+    .hiring-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      padding: 0.3rem 0.82rem; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #16a34a; margin-bottom: 0.9rem;
+    }
+    .hiring-dot { width: 6px; height: 6px; background: #16a34a; border-radius: 50%; animation: blink 1.8s infinite; }
+    .careers-note { font-size: 0.9rem; color: var(--text-muted); line-height: 1.72; }
+    .jobs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+    .job-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.7rem; cursor: pointer;
+      transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s;
+      position: relative; overflow: hidden;
+    }
+    .job-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue-300);
+      box-shadow: 0 12px 36px rgba(30,82,160,0.1);
+    }
+    .job-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--blue-500);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.28s;
+    }
+    .job-card:hover::before { transform: scaleX(1); }
+    .job-icon { font-size: 1.8rem; margin-bottom: 0.9rem; display: block; }
+    .job-role {
+      font-family: 'Merriweather', serif; font-size: 1rem;
+      font-weight: 700; color: var(--text); margin-bottom: 0.35rem;
+    }
+    .job-location { font-size: 0.74rem; color: var(--blue-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .job-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1rem; }
+    .job-tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+    .job-tag {
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      padding: 0.2rem 0.6rem; border-radius: 12px;
+      font-size: 0.7rem; font-weight: 600; color: var(--blue-600); letter-spacing: 0.04em;
+    }
+    .apply-btn {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      background: var(--blue-500); color: #fff;
+      padding: 0.62rem 1.3rem; border-radius: 7px;
+      font-size: 0.86rem; font-weight: 600;
+      border: none; cursor: pointer; width: 100%;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .apply-btn:hover { background: var(--blue-600); transform: translateY(-1px); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 5000;
+      background: rgba(10,20,40,0.6); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 16px; width: 100%; max-width: 560px;
+      max-height: 92vh; overflow-y: auto; position: relative;
+      animation: slideUp 0.3s ease;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .modal::-webkit-scrollbar { width: 4px; }
+    .modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+    .modal-header {
+      padding: 1.8rem 2rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: #fff; z-index: 2;
+    }
+    .modal-close {
+      position: absolute; top: 1.2rem; right: 1.3rem;
+      background: var(--off-white); border: 1px solid var(--border);
+      color: var(--slate); width: 30px; height: 30px;
+      border-radius: 50%; cursor: pointer; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--blue-50); color: var(--blue-500); border-color: var(--blue-200); }
+    .modal-role-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      padding: 0.25rem 0.75rem; border-radius: 14px;
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue-500); margin-bottom: 0.65rem;
+    }
+    .modal-title { font-family: 'Merriweather', serif; font-size: 1.45rem; font-weight: 900; color: var(--text); line-height: 1.2; }
+    .modal-subtitle { font-size: 0.82rem; color: var(--slate); margin-top: 0.28rem; }
+    .modal-body { padding: 1.5rem 2rem 2rem; }
+    .mform-group { margin-bottom: 1rem; }
+    .mform-group label {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: var(--slate); margin-bottom: 0.42rem;
+    }
+    .mform-group input, .mform-group select, .mform-group textarea {
+      width: 100%; background: var(--off-white);
+      border: 1px solid var(--border); border-radius: 7px;
+      padding: 0.72rem 0.95rem; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .mform-group input:focus, .mform-group select:focus, .mform-group textarea:focus {
+      border-color: var(--blue-400);
+      box-shadow: 0 0 0 3px rgba(30,82,160,0.08);
+      background: #fff;
+    }
+    .mform-group textarea { resize: vertical; min-height: 86px; }
+    .mform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .wa-submit {
+      width: 100%; margin-top: 0.5rem;
+      background: #25d366; color: #fff; border: none;
+      padding: 0.9rem 1.5rem; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.96rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+    }
+    .wa-submit:hover { background: #1da851; transform: translateY(-1px); }
+    .wa-icon { font-size: 1.1rem; }
+    .modal-disclaimer {
+      text-align: center; font-size: 0.74rem;
+      color: var(--slate-light); margin-top: 0.9rem; line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    .contact { background: #fff; border-top: 1px solid var(--border); }
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-form {
+      background: var(--off-white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 2.2rem;
+    }
+    .form-title {
+      font-family: 'Merriweather', serif; font-size: 1.1rem;
+      font-weight: 700; margin-bottom: 1.5rem; color: var(--text);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: var(--slate); margin-bottom: 0.42rem;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; background: #fff; border: 1px solid var(--border);
+      border-radius: 7px; padding: 0.72rem 0.95rem; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--blue-400);
+      box-shadow: 0 0 0 3px rgba(30,82,160,0.08);
+    }
+    .form-group textarea { resize: vertical; min-height: 95px; }
+    .submit-btn {
+      width: 100%; background: var(--blue-500); color: #fff;
+      border: none; padding: 0.9rem; border-radius: 7px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      margin-top: 0.4rem;
+    }
+    .submit-btn:hover { background: var(--blue-600); transform: translateY(-1px); }
+    .contact-info { display: flex; flex-direction: column; gap: 1.6rem; padding-top: 0.5rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      border-radius: 9px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.05rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.68rem; color: var(--blue-400); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 0.22rem; }
+    .contact-value { font-size: 0.92rem; color: var(--text); line-height: 1.55; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue-950); padding: 2.4rem 5%;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1.2rem;
+    }
+    .footer-brand {
+      font-family: 'Merriweather', serif; font-size: 1rem;
+      font-weight: 700; color: #fff;
+    }
+    .footer-brand span { color: var(--blue-300); }
+    .footer-sub { font-size: 0.76rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+    .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 1.3rem; }
+    .footer-links a {
+      font-size: 0.76rem; color: rgba(255,255,255,0.45);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--blue-300); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding-top: 6.5rem; }
+      .hero-visual { display: none; }
+      .services-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-intro { position: static; }
+      .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .partners-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .metrics-row { grid-template-columns: 1fr 1fr; }
+      .jobs-grid { grid-template-columns: 1fr 1fr; }
+      .careers-intro { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 560px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .mform-row { grid-template-columns: 1fr; }
+      .jobs-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -263,11 +632,9 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
   <div class="hero-content">
     <div class="hero-badge"><span class="badge-dot"></span>Trusted Recovery Partner Since 2010</div>
-    <h1>Professional<br><span class="h1-accent">Loan Recovery</span> Solutions</h1>
+    <h1>Professional<br><span class="h1-accent">Loan Recovery</span><br>Solutions</h1>
     <p class="hero-desc">Aditya Enterprise is a leading loan recovery agency working in strategic collaboration with Bajaj, Hero, and Mahindra — delivering efficient, compliant, and professional recovery services across India.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Get in Touch</a>
@@ -333,12 +700,12 @@
       <p class="section-desc">Structured, compliant, and result-oriented loan recovery services tailored to each partner's requirements and regulatory framework.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card"><span class="service-icon">&#127949;&#65039;</span><div class="service-title">Vehicle Loan Recovery</div><p class="service-desc">Specialised field teams for two-wheeler and four-wheeler loan recovery with legal compliance and full documentation.</p></div>
-      <div class="service-card"><span class="service-icon">&#128203;</span><div class="service-title">Pre-Default Engagement</div><p class="service-desc">Proactive borrower outreach via calls, field visits, and reminder notices before accounts turn NPA.</p></div>
-      <div class="service-card"><span class="service-icon">&#9878;&#65039;</span><div class="service-title">Legal Recovery Support</div><p class="service-desc">Coordination with legal teams for arbitration, possession certificates, and court-directed recovery processes.</p></div>
-      <div class="service-card"><span class="service-icon">&#128269;</span><div class="service-title">Skip Tracing</div><p class="service-desc">Locating absconding borrowers using database research, field intelligence, and verification networks.</p></div>
-      <div class="service-card"><span class="service-icon">&#128202;</span><div class="service-title">Portfolio Analysis</div><p class="service-desc">Data-driven assessment of delinquent portfolios to prioritise recovery efforts and improve cash flow.</p></div>
-      <div class="service-card"><span class="service-icon">&#129309;</span><div class="service-title">Settlement Facilitation</div><p class="service-desc">Negotiating structured settlement plans between lenders and borrowers for mutually beneficial resolutions.</p></div>
+      <div class="service-card"><span class="service-icon">🏛️</span><div class="service-title">Vehicle Loan Recovery</div><p class="service-desc">Specialised field teams for two-wheeler and four-wheeler loan recovery with legal compliance and full documentation.</p></div>
+      <div class="service-card"><span class="service-icon">📋</span><div class="service-title">Pre-Default Engagement</div><p class="service-desc">Proactive borrower outreach via calls, field visits, and reminder notices before accounts turn NPA.</p></div>
+      <div class="service-card"><span class="service-icon">⚖️</span><div class="service-title">Legal Recovery Support</div><p class="service-desc">Coordination with legal teams for arbitration, possession certificates, and court-directed recovery processes.</p></div>
+      <div class="service-card"><span class="service-icon">🔍</span><div class="service-title">Skip Tracing</div><p class="service-desc">Locating absconding borrowers using database research, field intelligence, and verification networks.</p></div>
+      <div class="service-card"><span class="service-icon">📊</span><div class="service-title">Portfolio Analysis</div><p class="service-desc">Data-driven assessment of delinquent portfolios to prioritise recovery efforts and improve cash flow.</p></div>
+      <div class="service-card"><span class="service-icon">🤝</span><div class="service-title">Settlement Facilitation</div><p class="service-desc">Negotiating structured settlement plans between lenders and borrowers for mutually beneficial resolutions.</p></div>
     </div>
   </div>
 </section>
@@ -349,16 +716,20 @@
     <div class="founder-card">
       <div class="founder-avatar">RJ</div>
       <div class="founder-name">Rajeev Jha</div>
-      <div class="founder-title">Founder &amp; Managing Director &mdash; Aditya Enterprise</div>
-      <p class="founder-quote">"Our foundation rests on three pillars &mdash; integrity, compliance, and results. Every case is handled with the professionalism that our clients and borrowers both deserve. We don't just recover money; we protect long-term relationships."</p>
+      <div class="founder-title">Founder &amp; Managing Director — Aditya Enterprise</div>
+      <p class="founder-quote">"Our foundation rests on three pillars — integrity, compliance, and results. Every case is handled with the professionalism that our clients and borrowers both deserve. We don't just recover money; we protect long-term relationships."</p>
     </div>
-    <div class="about-values">
-      <div class="section-label">Our Philosophy</div>
-      <div class="section-title">Built on Trust &amp; Results</div>
-      <div class="value-item"><span class="value-num">01</span><div><div class="value-title">Regulatory Compliance</div><p class="value-desc">All operations adhere to RBI guidelines and fair practice codes &mdash; protecting both lenders and borrowers.</p></div></div>
-      <div class="value-item"><span class="value-num">02</span><div><div class="value-title">Field Excellence</div><p class="value-desc">Trained recovery agents with domain expertise, ethical conduct guidelines, and GPS-tracked field operations.</p></div></div>
-      <div class="value-item"><span class="value-num">03</span><div><div class="value-title">Transparent Reporting</div><p class="value-desc">Real-time MIS reports, daily updates, and full transparency to our partner institutions at every stage.</p></div></div>
-      <div class="value-item"><span class="value-num">04</span><div><div class="value-title">Pan-India Network</div><p class="value-desc">Strong presence across Bihar, Jharkhand, UP &mdash; with a deep-rooted local intelligence network.</p></div></div>
+    <div>
+      <div class="about-values">
+        <div style="margin-bottom:1rem">
+          <div class="section-label">Our Philosophy</div>
+          <div class="section-title">Built on Trust &amp; Results</div>
+        </div>
+        <div class="value-item"><span class="value-num">01</span><div><div class="value-title">Regulatory Compliance</div><p class="value-desc">All operations adhere to RBI guidelines and fair practice codes — protecting both lenders and borrowers.</p></div></div>
+        <div class="value-item"><span class="value-num">02</span><div><div class="value-title">Field Excellence</div><p class="value-desc">Trained recovery agents with domain expertise, ethical conduct guidelines, and GPS-tracked field operations.</p></div></div>
+        <div class="value-item"><span class="value-num">03</span><div><div class="value-title">Transparent Reporting</div><p class="value-desc">Real-time MIS reports, daily updates, and full transparency to our partner institutions at every stage.</p></div></div>
+        <div class="value-item"><span class="value-num">04</span><div><div class="value-title">Pan-India Network</div><p class="value-desc">Strong presence across Bihar, Jharkhand, UP — with a deep-rooted local intelligence network.</p></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -380,60 +751,60 @@
 <section class="careers" id="careers">
   <div class="careers-intro">
     <div>
-      <div class="hiring-tag"><span class="hiring-dot"></span>Now Hiring &mdash; Multiple Positions Open</div>
+      <div class="hiring-tag"><span class="hiring-dot"></span>Now Hiring — Multiple Positions Open</div>
       <div class="section-label">Join Our Team</div>
       <div class="section-title">Work With the Best<br>in Recovery</div>
     </div>
-    <p class="careers-note">We are expanding our field operations and back-office team across Bihar and surrounding states. If you are driven, trustworthy, and want to build a real career in financial services &mdash; we want to hear from you. Applications go directly to our founder, Rajeev Jha.</p>
+    <p class="careers-note">We are expanding our field operations and back-office team across Bihar and surrounding states. If you are driven, trustworthy, and want to build a real career in financial services — we want to hear from you. Applications go directly to our founder, Rajeev Jha.</p>
   </div>
   <div class="jobs-grid">
-    <div class="job-card" onclick="openModal('Field Recovery Agent','Full-Time &middot; Field Role &middot; Patna &amp; Districts')">
-      <span class="job-icon">&#128661;</span>
+    <div class="job-card" onclick="openModal('Field Recovery Agent','Full-Time · Field Role · Patna &amp; Districts')">
+      <span class="job-icon">🚗</span>
       <div class="job-role">Field Recovery Agent</div>
-      <div class="job-location">&#128205; Patna &amp; Surrounding Districts</div>
+      <div class="job-location">📍 Patna &amp; Surrounding Districts</div>
       <p class="job-desc">Visit borrowers at their homes or workplaces, collect outstanding EMI payments, and maintain accurate records for each assigned case.</p>
       <div class="job-tags"><span class="job-tag">Full-Time</span><span class="job-tag">Field Work</span><span class="job-tag">Bike Preferred</span></div>
-      <button class="apply-btn">Apply Now &#8594;</button>
+      <button class="apply-btn">Apply Now →</button>
     </div>
-    <div class="job-card" onclick="openModal('Telecalling Executive','Full-Time &middot; Office Role &middot; Patna')">
-      <span class="job-icon">&#128222;</span>
+    <div class="job-card" onclick="openModal('Telecalling Executive','Full-Time · Office Role · Patna')">
+      <span class="job-icon">📞</span>
       <div class="job-role">Telecalling Executive</div>
-      <div class="job-location">&#128205; Patna Office</div>
+      <div class="job-location">📍 Patna Office</div>
       <p class="job-desc">Make outbound calls to loan defaulters, remind them of dues, negotiate repayment plans, and maintain daily call logs.</p>
       <div class="job-tags"><span class="job-tag">Full-Time</span><span class="job-tag">Office</span><span class="job-tag">Hindi Required</span></div>
-      <button class="apply-btn">Apply Now &#8594;</button>
+      <button class="apply-btn">Apply Now →</button>
     </div>
-    <div class="job-card" onclick="openModal('Recovery Supervisor','Full-Time &middot; Leadership &middot; Bihar Zone')">
-      <span class="job-icon">&#128203;</span>
+    <div class="job-card" onclick="openModal('Recovery Supervisor','Full-Time · Leadership · Bihar Zone')">
+      <span class="job-icon">📋</span>
       <div class="job-role">Recovery Supervisor</div>
-      <div class="job-location">&#128205; Patna &amp; Bihar Zone</div>
+      <div class="job-location">📍 Patna &amp; Bihar Zone</div>
       <p class="job-desc">Lead a team of field agents, assign daily cases, review collection reports, and be the main point of contact with partner companies.</p>
       <div class="job-tags"><span class="job-tag">Leadership</span><span class="job-tag">3+ Yrs Exp</span><span class="job-tag">Full-Time</span></div>
-      <button class="apply-btn">Apply Now &#8594;</button>
+      <button class="apply-btn">Apply Now →</button>
     </div>
-    <div class="job-card" onclick="openModal('Back Office Executive','Full-Time &middot; Office Role &middot; Patna')">
-      <span class="job-icon">&#128193;</span>
+    <div class="job-card" onclick="openModal('Back Office Executive','Full-Time · Office Role · Patna')">
+      <span class="job-icon">📁</span>
       <div class="job-role">Back Office Executive</div>
-      <div class="job-location">&#128205; Patna Office</div>
+      <div class="job-location">📍 Patna Office</div>
       <p class="job-desc">Handle data entry, document verification, MIS preparation, and coordinate between field teams and finance partners.</p>
       <div class="job-tags"><span class="job-tag">Office</span><span class="job-tag">Computer Skills</span><span class="job-tag">Full-Time</span></div>
-      <button class="apply-btn">Apply Now &#8594;</button>
+      <button class="apply-btn">Apply Now →</button>
     </div>
-    <div class="job-card" onclick="openModal('Legal &amp; Documentation Assistant','Full-Time &middot; Office Role &middot; Patna')">
-      <span class="job-icon">&#9878;&#65039;</span>
+    <div class="job-card" onclick="openModal('Legal &amp; Documentation Assistant','Full-Time · Office Role · Patna')">
+      <span class="job-icon">⚖️</span>
       <div class="job-role">Legal &amp; Documentation Assistant</div>
-      <div class="job-location">&#128205; Patna Office</div>
+      <div class="job-location">📍 Patna Office</div>
       <p class="job-desc">Assist in preparing legal notices, court documents, possession certificates, and manage case files for legal recovery proceedings.</p>
       <div class="job-tags"><span class="job-tag">Legal Background</span><span class="job-tag">Documentation</span><span class="job-tag">Full-Time</span></div>
-      <button class="apply-btn">Apply Now &#8594;</button>
+      <button class="apply-btn">Apply Now →</button>
     </div>
-    <div class="job-card" onclick="openModal('Field Verification Officer','Full-Time &middot; Field Role &middot; Bihar &amp; Jharkhand')">
-      <span class="job-icon">&#128269;</span>
+    <div class="job-card" onclick="openModal('Field Verification Officer','Full-Time · Field Role · Bihar &amp; Jharkhand')">
+      <span class="job-icon">🔍</span>
       <div class="job-role">Field Verification Officer</div>
-      <div class="job-location">&#128205; Bihar &amp; Jharkhand</div>
+      <div class="job-location">📍 Bihar &amp; Jharkhand</div>
       <p class="job-desc">Verify borrower addresses, employment status, and conduct physical verification of assets for skip tracing and pre-disbursement checks.</p>
       <div class="job-tags"><span class="job-tag">Field Work</span><span class="job-tag">Bike Required</span><span class="job-tag">Full-Time</span></div>
-      <button class="apply-btn">Apply Now &#8594;</button>
+      <button class="apply-btn">Apply Now →</button>
     </div>
   </div>
 </section>
@@ -444,12 +815,12 @@
     <div>
       <div class="section-label">Reach Us</div>
       <div class="section-title">Let's Work<br>Together</div>
-      <p class="section-desc" style="margin-bottom:2.4rem">Whether you're a financial institution looking for a recovery partner, or need assistance with loan resolution &mdash; we are here to help.</p>
+      <p class="section-desc" style="margin-bottom:2.5rem">Whether you're a financial institution looking for a recovery partner, or need assistance with loan resolution — we are here to help.</p>
       <div class="contact-info">
-        <div class="contact-item"><div class="contact-icon">&#128205;</div><div><div class="contact-label">Office Address</div><div class="contact-value">Aditya Enterprise, Patna, Bihar, India</div></div></div>
-        <div class="contact-item"><div class="contact-icon">&#128222;</div><div><div class="contact-label">Phone</div><div class="contact-value">+91 77393 31422</div></div></div>
-        <div class="contact-item"><div class="contact-icon">&#9993;&#65039;</div><div><div class="contact-label">Email</div><div class="contact-value">contact@adityaenterprise.in</div></div></div>
-        <div class="contact-item"><div class="contact-icon">&#128336;</div><div><div class="contact-label">Working Hours</div><div class="contact-value">Monday &ndash; Saturday: 9:00 AM &ndash; 6:00 PM</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label">Office Address</div><div class="contact-value">Aditya Enterprise, Patna, Bihar, India</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-label">Phone</div><div class="contact-value">+91 77393 31422</div></div></div>
+        <div class="contact-item"><div class="contact-icon">✉️</div><div><div class="contact-label">Email</div><div class="contact-value">contact@adityaenterprise.in</div></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-label">Working Hours</div><div class="contact-value">Monday – Saturday: 9:00 AM – 6:00 PM</div></div></div>
       </div>
     </div>
     <div class="contact-form">
@@ -468,7 +839,7 @@
         </select>
       </div>
       <div class="form-group"><label>Message</label><textarea id="cMsg" placeholder="Describe your requirement..."></textarea></div>
-      <button class="submit-btn" onclick="submitEnquiry()">Submit via WhatsApp &#8594;</button>
+      <button class="submit-btn" onclick="submitEnquiry()">Submit via WhatsApp →</button>
     </div>
   </div>
 </section>
@@ -477,9 +848,9 @@
 <footer>
   <div>
     <div class="footer-brand">Aditya <span>Enterprise</span></div>
-    <div class="footer-copy" style="margin-top:0.35rem">Founded by Rajeev Jha &middot; Patna, Bihar</div>
+    <div class="footer-sub">Founded by Rajeev Jha · Patna, Bihar</div>
   </div>
-  <div class="footer-copy">&copy; 2024 Aditya Enterprise. All rights reserved.</div>
+  <div class="footer-copy">© 2024 Aditya Enterprise. All rights reserved.</div>
   <div class="footer-links">
     <a href="#partners">Partners</a>
     <a href="#services">Services</a>
@@ -493,10 +864,10 @@
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal" id="appModal">
     <div class="modal-header">
-      <button class="modal-close" onclick="closeModal()">&#10005;</button>
-      <div class="modal-role-badge">&#128226; Open Position</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-role-badge">📢 Open Position</div>
       <div class="modal-title" id="modalTitle">Field Recovery Agent</div>
-      <div class="modal-subtitle" id="modalSubtitle">Full-Time &middot; Patna, Bihar</div>
+      <div class="modal-subtitle" id="modalSubtitle">Full-Time · Patna, Bihar</div>
     </div>
     <div class="modal-body">
       <div class="mform-row">
@@ -542,7 +913,7 @@
         <textarea id="appWhy" placeholder="Tell us a bit about yourself and why you are interested in this role..."></textarea>
       </div>
       <button class="wa-submit" onclick="sendViaWhatsApp()">
-        <span class="wa-icon">&#128172;</span> Send Application via WhatsApp
+        <span class="wa-icon">💬</span> Send Application via WhatsApp
       </button>
       <p class="modal-disclaimer">
         Your application goes directly to <strong>Rajeev Jha (Founder)</strong> on WhatsApp.<br>
