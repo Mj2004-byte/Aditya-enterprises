@@ -10,6 +10,11 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
+      --nav-bar: 64px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
       --blue-950: #06101f;
       --blue-900: #0b1a30;
       --blue-800: #102240;
@@ -42,6 +47,9 @@
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.6;
+    }
+    @media (max-width: 560px) {
+      body { padding-bottom: calc(5.75rem + var(--safe-bottom)); }
     }
     body.splash-active { overflow: hidden; }
 
@@ -150,6 +158,9 @@
       border: 5px solid transparent; border-left-color: var(--text);
     }
     .wa-float:hover .wa-float-tooltip { opacity: 1; }
+    @media (hover: none) {
+      .wa-float-tooltip { display: none; }
+    }
 
     /* ── SCROLL-TO-TOP ── */
     #scrollTop {
@@ -170,8 +181,11 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       background: rgba(255,255,255,0.97);
       border-bottom: 1px solid var(--border);
-      padding: 0 clamp(1rem, 4vw, 5%); display: flex; align-items: center; justify-content: space-between;
-      height: 64px; backdrop-filter: blur(12px);
+      padding: var(--safe-top) 5% 0;
+      min-height: calc(var(--nav-bar) + var(--safe-top));
+      box-sizing: border-box;
+      display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(12px);
       transition: box-shadow 0.3s;
     }
     nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); }
@@ -204,22 +218,33 @@
     .nav-cta:hover { background: var(--blue-600) !important; }
     .nav-cta.active::after { display: none; }
     .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      cursor: pointer; background: none; border: none; padding: 4px;
+      display: none; flex-direction: column; gap: 5px; justify-content: center; align-items: center;
+      cursor: pointer; background: none; border: none;
+      padding: 0; min-width: 44px; min-height: 44px;
+      flex-shrink: 0;
     }
     .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
-      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190;
+      display: none; position: fixed;
+      top: calc(var(--nav-bar) + var(--safe-top));
+      left: 0; right: 0; z-index: 190;
       background: #fff; border-bottom: 1px solid var(--border);
-      padding: 1rem 5%; flex-direction: column; gap: 0.2rem;
+      padding: 0.75rem max(1rem, var(--safe-left)) 1rem max(1rem, var(--safe-right));
+      flex-direction: column; gap: 0.15rem;
+      max-height: min(70vh, calc(100dvh - var(--nav-bar) - var(--safe-top)));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .mobile-menu a {
       color: var(--text-muted); text-decoration: none;
       font-size: 0.92rem; font-weight: 500;
-      padding: 0.55rem 0.75rem; border-radius: 6px; display: block;
+      padding: 0.65rem 0.75rem; border-radius: 6px; display: flex;
+      align-items: center;
+      min-height: 44px;
+      box-sizing: border-box;
     }
     .mobile-menu a:hover { background: var(--blue-50); color: var(--blue-500); }
     .mobile-menu.open { display: flex; }
@@ -232,6 +257,7 @@
       background: var(--off-white);
       border-bottom: 1px solid var(--border);
       position: relative; overflow: hidden;
+      margin-top: -1px;
     }
     .hero::before {
       content: ''; position: absolute; top: -120px; right: -80px;
@@ -310,6 +336,7 @@
     .ticker-bar {
       background: var(--blue-500); color: #fff;
       padding: 0.5rem 0; overflow: hidden; position: relative;
+      margin-top: calc(var(--nav-bar) + var(--safe-top));
     }
     .ticker-inner {
       display: flex; gap: 0; white-space: nowrap;
@@ -421,8 +448,8 @@
     .tcard {
       background: #fff; border: 1px solid var(--border); border-radius: 14px;
       padding: 1.8rem 1.6rem;
-      width: min(300px, calc(100vw - 2.5rem));
-      min-width: 0; flex: 0 0 auto;
+      width: 300px;
+      flex: 0 0 auto;
       box-sizing: border-box;
       box-shadow: 0 2px 12px rgba(0,0,0,0.04);
       transition: box-shadow 0.2s;
@@ -538,7 +565,16 @@
 
     /* ── CONTACT ── */
     .contact { background: #fff; border-top: 1px solid var(--border); }
-    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5rem;
+      row-gap: 0;
+      align-items: start;
+    }
+    .contact-left-col { grid-column: 1; grid-row: 1; }
+    .contact-layout > .map-embed { grid-column: 1; grid-row: 2; }
+    .contact-form { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
     .contact-form { background: var(--off-white); border: 1px solid var(--border); border-radius: 14px; padding: 2.2rem; }
     .form-title { font-family: 'Merriweather', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text); }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -566,7 +602,7 @@
     .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
     .contact-icon { width: 40px; height: 40px; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; flex-shrink: 0; }
     .contact-label { font-size: 0.68rem; color: var(--blue-400); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 0.22rem; }
-    .contact-value { font-size: 0.92rem; color: var(--text); line-height: 1.55; }
+    .contact-value { font-size: 0.92rem; color: var(--text); line-height: 1.55; word-break: break-word; overflow-wrap: anywhere; }
     .contact-value a { color: var(--blue-500); text-decoration: none; }
     .contact-value a:hover { text-decoration: underline; }
 
@@ -656,17 +692,30 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
+      nav {
+        padding-left: max(1rem, var(--safe-left));
+        padding-right: max(1rem, var(--safe-right));
+      }
       .hero {
         grid-template-columns: 1fr;
         gap: 2.25rem;
-        padding: 6.5rem clamp(1rem, 4vw, 5%) 3.5rem;
+        padding: 6.5rem max(1rem, var(--safe-left)) 3.5rem max(1rem, var(--safe-right));
         min-height: auto;
       }
       .hero-visual { max-width: 28rem; width: 100%; margin: 0 auto; justify-self: center; }
       .services-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       .services-intro { position: static; }
       .about-layout { grid-template-columns: 1fr; gap: 3rem; }
-      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      .contact-left-col { display: contents; }
+      .contact-lead { order: 1; }
+      .contact-info { order: 2; }
+      .contact-form { order: 3; }
+      .contact-layout > .map-embed { order: 4; margin-top: 0; }
       .partners-grid { grid-template-columns: 1fr; max-width: 32rem; margin-left: auto; margin-right: auto; }
       .metrics-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
       .jobs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
@@ -676,12 +725,14 @@
       .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .faq-layout { grid-template-columns: 1fr; gap: 2rem; }
       .faq-intro { position: static; }
+      .testimonials-track-outer { padding: 0 max(0.5rem, var(--safe-left)) 0 max(0.5rem, var(--safe-right)); }
       .testimonials-track-outer::before,
-      .testimonials-track-outer::after { width: 24px; }
-      .logo-text { font-size: clamp(0.82rem, 3.5vw, 0.98rem); }
-      .logo-sub { font-size: 0.55rem; letter-spacing: 0.08em; }
-      section { padding: 4rem clamp(1rem, 4vw, 5%); }
-      .partners { padding: 3.5rem clamp(1rem, 4vw, 5%); }
+      .testimonials-track-outer::after { width: 20px; }
+      .tcard {
+        width: min(300px, calc(100vw - 2rem - var(--safe-left) - var(--safe-right)));
+      }
+      section { padding: 4rem max(1rem, var(--safe-left)) 4rem max(1rem, var(--safe-right)); }
+      .partners { padding: 3.5rem max(1rem, var(--safe-left)) 3.5rem max(1rem, var(--safe-right)); }
       .modal-header { padding: 1.35rem 1.25rem 1rem; }
       .modal-body { padding: 1.25rem 1.25rem 1.5rem; }
       .modal-title { font-size: clamp(1.15rem, 4vw, 1.45rem); }
@@ -692,15 +743,23 @@
       .mform-row { grid-template-columns: 1fr; }
       .jobs-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
-      section { padding: 3rem 1rem; }
-      .partners { padding: 2.75rem 1rem; }
-      .footer-top { padding: 2.5rem 1rem 1.75rem; }
-      .footer-bottom { padding: 1rem; justify-content: center; text-align: center; flex-direction: column; }
+      section { padding: 3rem max(1rem, var(--safe-left)) 3rem max(1rem, var(--safe-right)); }
+      .partners { padding: 2.75rem max(1rem, var(--safe-left)) 2.75rem max(1rem, var(--safe-right)); }
+      .footer-top { padding: 2.5rem max(1rem, var(--safe-left)) 1.75rem max(1rem, var(--safe-right)); }
+      .footer-bottom { padding: 1rem max(1rem, var(--safe-left)) 1rem max(1rem, var(--safe-right)); justify-content: center; text-align: center; flex-direction: column; }
       .ticker-item { font-size: 0.7rem; padding: 0 1.25rem; }
-      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-content { text-align: center; }
+      .hero-badge { margin-left: auto; margin-right: auto; }
+      .hero-desc { margin-left: auto; margin-right: auto; max-width: 100%; }
+      .hero-actions { flex-direction: column; align-items: stretch; max-width: 22rem; margin-left: auto; margin-right: auto; width: 100%; }
       .hero-actions .btn-primary,
       .hero-actions .btn-outline { text-align: center; }
       .stat-num { font-size: clamp(1.65rem, 8vw, 2.1rem); }
+      .stats-card { padding: 1.35rem 1rem; }
+      .stats-grid { gap: 0.85rem 0.35rem; }
+      .partner-pills { justify-content: center; }
+      .logo-text { font-size: clamp(0.8rem, 4.2vw, 0.98rem); }
+      .logo-sub { font-size: 0.55rem; letter-spacing: 0.08em; }
       .contact-form { padding: 1.5rem 1.15rem; }
       .founder-card { padding: 2rem 1.35rem; }
       .faq-q { padding: 1rem 1rem; font-size: 0.88rem; }
@@ -760,7 +819,7 @@
 </div>
 
 <!-- TICKER -->
-<div class="ticker-bar" style="margin-top:64px">
+<div class="ticker-bar">
   <div class="ticker-inner" id="tickerInner">
     <span class="ticker-item">🏆 98% Recovery Rate Achieved in FY 2024–25</span>
     <span class="ticker-item ticker-sep">|</span>
@@ -814,7 +873,7 @@
 </div>
 
 <!-- HERO -->
-<section class="hero" style="margin-top:-1px">
+<section class="hero">
   <div class="hero-content fade-in">
     <div class="hero-badge"><span class="badge-dot"></span>Trusted Recovery Partner Since 2010</div>
     <h1>Professional<br><span class="h1-accent">Loan Recovery</span><br>Solutions</h1>
@@ -1116,14 +1175,16 @@
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-layout">
-    <div>
-      <div class="section-label fade-in">Reach Us</div>
-      <div class="section-title fade-in">Let's Work<br>Together</div>
-      <p class="section-desc fade-in" style="margin-bottom:2.5rem">Whether you're a financial institution looking for a recovery partner, or need assistance with loan resolution — we are here to help.</p>
+    <div class="contact-left-col">
+      <div class="contact-lead fade-in">
+        <div class="section-label">Reach Us</div>
+        <div class="section-title">Let's Work<br>Together</div>
+        <p class="section-desc" style="margin-bottom:2.5rem">Whether you're a financial institution looking for a recovery partner, or need assistance with loan resolution — we are here to help.</p>
+      </div>
       <div class="contact-info fade-in">
         <div class="contact-item">
           <div class="contact-icon">📍</div>
-          <div><div class="contact-label">Office Address</div><div class="contact-value">Aditya Enterprise, Patna, Bihar, India</div></div>
+          <div><div class="contact-label">Office Address</div><div class="contact-value">Aditya Enterprise, Rahika, Madhubani District, Bihar 847238, India</div></div>
         </div>
         <div class="contact-item">
           <div class="contact-icon">📞</div>
@@ -1141,12 +1202,6 @@
           <div class="contact-icon">💬</div>
           <div><div class="contact-label">WhatsApp</div><div class="contact-value"><a href="https://wa.me/917739331422" target="_blank">Chat directly with Rajeev Jha →</a></div></div>
         </div>
-      </div>
-      <div class="map-embed fade-in">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114952.70997461267!2d85.03304!3d25.5940947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed58dce6732867%3A0x4059f39a1ac82f06!2sPatna%2C%20Bihar!5e0!3m2!1sen!2sin!4v1700000000000"
-          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Aditya Enterprise Location — Patna, Bihar">
-        </iframe>
       </div>
     </div>
     <div class="contact-form fade-in">
@@ -1170,6 +1225,12 @@
         <div class="char-count"><span id="charCount">0</span>/500</div>
       </div>
       <button class="submit-btn" onclick="submitEnquiry()">Submit via WhatsApp →</button>
+    </div>
+    <div class="map-embed fade-in">
+      <iframe
+        src="https://maps.google.com/maps?q=Rahika%2C+Madhubani+District%2C+Bihar+847238%2C+India&amp;z=15&amp;hl=en&amp;output=embed"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Aditya Enterprise — Rahika, Madhubani, Bihar 847238">
+      </iframe>
     </div>
   </div>
 </section>
@@ -1201,13 +1262,13 @@
       <div class="footer-col-title">Contact</div>
       <a href="tel:+917739331422">+91 77393 31422</a>
       <a href="mailto:contact@adityaenterprise.in">contact@adityaenterprise.in</a>
-      <a href="#">Patna, Bihar, India</a>
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=Rahika%2C+Madhubani+District%2C+Bihar+847238" target="_blank" rel="noopener noreferrer">Rahika, Madhubani, Bihar 847238</a>
       <a href="#faq">FAQs</a>
     </div>
   </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2025 Aditya Enterprise. All rights reserved. Founded by Rajeev Jha.</div>
-    <div class="footer-copy">Made with ❤️ in Patna, Bihar</div>
+    <div class="footer-copy">Made with ❤️ in Rahika, Bihar</div>
   </div>
 </footer>
 
