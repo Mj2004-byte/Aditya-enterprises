@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>Aditya Enterprise | Loan Recovery Agency</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -104,7 +104,7 @@
 
     /* ── TOAST NOTIFICATION ── */
     #toastContainer {
-      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
+      position: fixed; bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); right: calc(1rem + env(safe-area-inset-right, 0px)); z-index: 9999;
       display: flex; flex-direction: column; gap: 0.6rem; pointer-events: none;
     }
     .toast {
@@ -125,7 +125,7 @@
 
     /* ── FLOATING WHATSAPP ── */
     .wa-float {
-      position: fixed; bottom: 5rem; right: 1.5rem; z-index: 500;
+      position: fixed; bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); right: calc(1rem + env(safe-area-inset-right, 0px)); z-index: 500;
       width: 52px; height: 52px; border-radius: 50%;
       background: #25d366; box-shadow: 0 4px 18px rgba(37,211,102,0.4);
       display: flex; align-items: center; justify-content: center;
@@ -153,7 +153,7 @@
 
     /* ── SCROLL-TO-TOP ── */
     #scrollTop {
-      position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 500;
+      position: fixed; bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); left: calc(1rem + env(safe-area-inset-left, 0px)); z-index: 500;
       width: 42px; height: 42px; border-radius: 10px;
       background: #fff; border: 1px solid var(--border);
       box-shadow: 0 2px 12px rgba(0,0,0,0.1);
@@ -170,12 +170,13 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       background: rgba(255,255,255,0.97);
       border-bottom: 1px solid var(--border);
-      padding: 0 5%; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1rem, 4vw, 5%); display: flex; align-items: center; justify-content: space-between;
       height: 64px; backdrop-filter: blur(12px);
       transition: box-shadow 0.3s;
     }
     nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+    .nav-logo > div:last-child { min-width: 0; }
     .logo-mark {
       width: 38px; height: 38px; background: var(--blue-500);
       border-radius: 7px; display: flex; align-items: center; justify-content: center;
@@ -419,14 +420,18 @@
     }
     .tcard {
       background: #fff; border: 1px solid var(--border); border-radius: 14px;
-      padding: 1.8rem 1.6rem; min-width: 300px; flex-shrink: 0;
+      padding: 1.8rem 1.6rem;
+      width: min(300px, calc(100vw - 2.5rem));
+      min-width: 0; flex: 0 0 auto;
+      box-sizing: border-box;
       box-shadow: 0 2px 12px rgba(0,0,0,0.04);
       transition: box-shadow 0.2s;
     }
     .tcard:hover { box-shadow: 0 8px 28px rgba(30,82,160,0.09); }
     .tcard-stars { color: #f59e0b; font-size: 0.85rem; margin-bottom: 0.85rem; letter-spacing: 2px; }
     .tcard-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.72; font-style: italic; margin-bottom: 1.2rem; }
-    .tcard-author { display: flex; align-items: center; gap: 0.75rem; }
+    .tcard-author { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .tcard-author > div:nth-child(2) { flex: 1 1 auto; min-width: min(100%, 10rem); }
     .tcard-avatar {
       width: 38px; height: 38px; border-radius: 50%;
       background: var(--blue-100); color: var(--blue-600);
@@ -651,29 +656,76 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; padding-top: 6.5rem; }
-      .hero-visual { display: none; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+        padding: 6.5rem clamp(1rem, 4vw, 5%) 3.5rem;
+        min-height: auto;
+      }
+      .hero-visual { max-width: 28rem; width: 100%; margin: 0 auto; justify-self: center; }
       .services-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       .services-intro { position: static; }
       .about-layout { grid-template-columns: 1fr; gap: 3rem; }
       .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-      .partners-grid { grid-template-columns: 1fr; max-width: 400px; }
-      .metrics-row { grid-template-columns: 1fr 1fr; }
-      .jobs-grid { grid-template-columns: 1fr 1fr; }
-      .careers-intro { grid-template-columns: 1fr; }
+      .partners-grid { grid-template-columns: 1fr; max-width: 32rem; margin-left: auto; margin-right: auto; }
+      .metrics-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      .jobs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      .careers-intro { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .faq-layout { grid-template-columns: 1fr; gap: 2rem; }
       .faq-intro { position: static; }
+      .testimonials-track-outer::before,
+      .testimonials-track-outer::after { width: 24px; }
+      .logo-text { font-size: clamp(0.82rem, 3.5vw, 0.98rem); }
+      .logo-sub { font-size: 0.55rem; letter-spacing: 0.08em; }
+      section { padding: 4rem clamp(1rem, 4vw, 5%); }
+      .partners { padding: 3.5rem clamp(1rem, 4vw, 5%); }
+      .modal-header { padding: 1.35rem 1.25rem 1rem; }
+      .modal-body { padding: 1.25rem 1.25rem 1.5rem; }
+      .modal-title { font-size: clamp(1.15rem, 4vw, 1.45rem); }
     }
     @media (max-width: 560px) {
       .services-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .mform-row { grid-template-columns: 1fr; }
       .jobs-grid { grid-template-columns: 1fr; }
-      .metrics-row { grid-template-columns: 1fr 1fr; }
       .footer-top { grid-template-columns: 1fr; }
+      section { padding: 3rem 1rem; }
+      .partners { padding: 2.75rem 1rem; }
+      .footer-top { padding: 2.5rem 1rem 1.75rem; }
+      .footer-bottom { padding: 1rem; justify-content: center; text-align: center; flex-direction: column; }
+      .ticker-item { font-size: 0.7rem; padding: 0 1.25rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn-primary,
+      .hero-actions .btn-outline { text-align: center; }
+      .stat-num { font-size: clamp(1.65rem, 8vw, 2.1rem); }
+      .contact-form { padding: 1.5rem 1.15rem; }
+      .founder-card { padding: 2rem 1.35rem; }
+      .faq-q { padding: 1rem 1rem; font-size: 0.88rem; }
+      .faq-a-inner { padding: 0 1rem 1rem; }
+      .map-embed iframe { height: min(220px, 50vw); }
+      #toastContainer {
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+      }
+      .toast { max-width: none; width: 100%; box-sizing: border-box; }
+      .tcard-partner-badge { margin-left: 0; }
+    }
+    @media (max-width: 400px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .metric-num { font-size: clamp(2rem, 12vw, 2.6rem); }
+      .job-filters { gap: 0.35rem; }
+      .filter-btn { padding: 0.34rem 0.75rem; font-size: 0.72rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .ticker-inner { animation: none; }
+      .fade-in { opacity: 1; transform: none; transition: none; }
+      .wa-float { animation: none; }
+      .badge-dot, .hiring-dot { animation: none; }
     }
   </style>
 </head>
@@ -1342,8 +1394,10 @@ function buildTestimonialsNav() {
 function goToSlide(idx) {
   tIndex = idx;
   tDots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-  var cardWidth = cards[0].offsetWidth + 22;
-  tTrack.style.transform = 'translateX(-' + (idx * tVisible * cardWidth) + 'px)';
+  if (!cards[0]) return;
+  var cardW = cards[0].offsetWidth;
+  var gapPx = parseFloat(window.getComputedStyle(tTrack).gap) || 22;
+  tTrack.style.transform = 'translateX(-' + (idx * tVisible * (cardW + gapPx)) + 'px)';
 }
 
 buildTestimonialsNav();
